@@ -14,5 +14,76 @@ Unfortunately, both guides dont exactly explain/show you how to put those parts 
 - [Bevy examples](https://github.com/bevyengine/bevy/tree/v0.5.0/examples)
 - [Bevy ECS examples](https://github.com/bevyengine/bevy/blob/v0.5.0/crates/bevy_ecs/examples)
 
+Also reference the [Bevy Cheatbook](https://bevy-cheatbook.github.io/setup/getting-started.html)  
+and [Bevy Github examples](https://github.com/bevyengine/bevy/tree/main/examples)
+
 Note, do not use `main` branch as there are subtle changes that occur quite frequently.  
-Instead, use the current version. At the time of writing, `0.5` is the latest version
+Instead, use the current version. At the time of writing, `0.7` is the latest version
+
+Helpful Youtube resource:
+
+- [Logic Projects](https://www.youtube.com/channel/UC7v3YEDa603x_84PgCPytzA/videos)
+
+## Install Rust
+
+```shell
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+## Setting up
+
+```shell
+cargo new tutorial
+cd tutorial
+```
+
+In `Cargo.toml`, add `bevy = "0.7.0"`:
+
+```toml
+[package]
+name = "tutorial"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy = "0.7.0"
+```
+
+In `src/main.rs`
+
+```rust
+use bevy::prelude::*;
+
+fn main() {
+  App::new()
+  .add_plugins(DefaultPlugins)
+  .run();
+}
+```
+
+## Running examples in the Bevy repo
+
+First clone the repo:
+
+```rust
+git clone git@github.com:bevyengine/bevy.git
+```
+
+Then run an example from the `examples` dir:
+
+```rust
+cargo run --example hello_world
+```
+
+Can also look at `Cargo.toml` to get a list of examples
+
+## Generate and run Bevy docs locally
+
+In any Bevy project root directory, run:
+
+```rust
+cargo doc --open
+```
+

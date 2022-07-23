@@ -12,3 +12,10 @@ Install AWS Copilot CLI
 Set up an AWS Account
 Deploy your preferred VPC (including subnets) or use the template I created for this tutorial
 ```
+
+## References
+
+- https://www.copilot.rocks/getting-started/20-deploy-http-api/
+- https://aws.github.io/copilot-cli/community/guides/#workshops
+- https://github.com/aws-containers/
+- https://github.com/aws-samples/aws-copilot-sample-service

@@ -81,13 +81,18 @@ docker compose run api rake db:create --trace
 docker rmi -f $(docker images -aq)
 ```
 
+## Run a specific docker compose file
+
+```
+docker compose --file docker-compose.development.yml up --build
+```
+
 docker ps
 docker exec -ti --user root <docker-container-id> /bin/bash
 docker exec -it d8c35b5c5f08 psql -U postgres -d template1
 docker-compose up -d --force-recreate db
 docker-compose run api bundle exec rake db:create --trace
 docker-compose run api bundle exec rails c
-
 ```
 docker build -t rails-toolbox -f Dockerfile.rails .
 ```
