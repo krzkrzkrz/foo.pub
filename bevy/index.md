@@ -87,3 +87,29 @@ In any Bevy project root directory, run:
 cargo doc --open
 ```
 
+## To output to terminal
+
+For debugging, you can use
+
+```rust
+info!("Foobar");
+info!("{}", transform.translation);
+```
+
+Use `#[derive(Debug)` to add support for debug-printing
+i.e. `trace!/debug!/info!/warn!/error!`
+
+User-facing formatting (can only be used to print data types that impl Display)
+
+```rust
+info!("{}", x);
+println!("{}", x);
+```
+
+Developer-facing formatting, with code-like syntax (can be used to print data types that impl Debug)
+
+```rust
+info!("{:?}", x);
+println!("{:?}", x);
+```
+
