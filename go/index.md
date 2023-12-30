@@ -485,7 +485,505 @@ done
 0
 ```
 
+# Pointers
+
+Go has pointers. A pointer holds the memory address of a value.
+
+The type `*T` is a pointer to a `T` value. Its zero value is `nil.`
+
+```go
+var p *int
+```
+
+The `&` operator generates a pointer to its operand.
+
+```go
+i := 42
+p = &i
+```
+
+The `*` operator denotes the pointer's underlying value.
+
+```go
+fmt.Println(*p) // read i through the pointer p
+*p = 21         // set i through the pointer p
+```
+
+This is known as "dereferencing" or "indirecting".
+
+# Structs
+
+A `struct` is a collection of fields.
+
+```go
+type Vertex struct {
+  X int
+  Y int
+}
+
+func main() {
+  fmt.Println(Vertex{1, 2})
+}
+```
+
+`Struct fields` are access using a dot
+
+```go
+func main() {
+  v := Vertex{1, 2}
+  v.X = 4
+  fmt.Println(v.X)
+}
+```
+
+# Pointers to structs
+
+Struct fields can be accessed through a struct pointer.  
+To access the field `X` of a struct when we have the struct pointer p we could write `(*p).X`. However,
+that notation is cumbersome, so the language permits us instead to write just `p.X`, without the explicit dereference.
+
+```go
+type Vertex struct {
+  X int
+  Y int
+}
+
+func main() {
+  v := Vertex{1, 2}
+  p := &v
+  p.X = 1e9
+  fmt.Println(v)
+}
+```
+
+# Struct Literals
+
+A struct literal denotes a newly allocated struct value by listing the values of its fields.  
+You can list just a subset of fields by using the `Name:` syntax. (And the order of named fields is irrelevant)  
+The special prefix `&` returns a pointer to the struct value.
+
+```go
+type Vertex struct {
+  X, Y int
+}
+
+var (
+  v1 = Vertex{1, 2}  // has type Vertex
+  v2 = Vertex{X: 1}  // Y:0 is implicit
+  v3 = Vertex{}      // X:0 and Y:0
+  p  = &Vertex{1, 2} // has type *Vertex
+)
+
+func main() {
+  fmt.Println(v1, p, v2, v3)
+}
+```
+
+Returns: `{1 2} &{1 2} {1 0} {0 0}`
+
+# Arrays
+
+The type `[n]T` is an array of `n` values of type `T`
+
+The expression declares a variable `a` as an array of ten integers:
+
+```go
+var a [10]int
+```
+
+An array's length is part of its type, so arrays cannot be resized. This seems limiting, but don't worry; Go provides a convenient way of working with arrays.
+
+```go
+func main() {
+  var a [2]string
+  a[0] = "Hello"
+  a[1] = "World"
+  fmt.Println(a[0], a[1]) // Prints: Hello World
+  fmt.Println(a)          // Prints: [Hello World]
+
+  primes := [6]int{2, 3, 5, 7, 11, 13}
+  fmt.Println(primes)     // Prints: [2 3 5 7 11 13]
+}
+```
+
+# Slices
+
+An array has a fixed size. A slice, on the other hand, is a dynamically-sized, flexible view into the elements of an array. In practice, slices are much more common than arrays.
+
+The type `[]T` is a slice with elements of type `T`
+
+The following expression creates a slice which includes elements 1 through 3 of `a`:
+
+```go
+a[1:4]
+```
+
+For example:
+
+```go
+func main() {
+  primes := [6]int{2, 3, 5, 7, 11, 13}
+  var s []int = primes[1:4]
+  fmt.Println(s) // Prints: [3 5 7]
+}
+```
+
+Slices are like references to arrays  
+A slice does not store any data, it just describes a section of an underlying array  
+Changing the elements of a slice modifies the corresponding elements of its underlying array
+
+```go
+func main() {
+  names := [4]string{
+    "John",
+    "Paul",
+    "George",
+    "Ringo",
+  }
+  fmt.Println(names) // Prints: [John Paul George Ringo]
+
+  a := names[0:2]
+  b := names[1:3]
+  fmt.Println(a, b)  // Prints: [John Paul] [Paul George]
+
+  b[0] = "XXX"
+  fmt.Println(a, b)  // Prints: [John XXX] [XXX George]
+  fmt.Println(names) // Prints: [John XXX George Ringo]
+}
+```
+
+# Slice literals
+
+A slice literal is like an array literal without the length
+
+```go
+func main() {
+  q := []int{2, 3, 5, 7, 11, 13}
+  fmt.Println(q)
+}
+```
+
+# Slice defaults
+
+For the array
+
+```go
+var a [10]int
+
+// These slice expressions are equivalent:
+
+a[0:10]
+a[:10]
+a[0:]
+a[:]
+```
+
+# Slice length and capacity
+
+A slice has both a length and a capacity.  
+The length of a slice is the number of elements it contains.  
+The capacity of a slice is the number of elements in the underlying array, counting from the first element in the slice.  
+The length and capacity of a slice `s` can be obtained using the expressions `len(s)` and `cap(s)`.
+
+```go
+
+func main() {
+  s := []int{2, 3, 5, 7, 11, 13}
+  printSlice(s) // Prints: len=6 cap=6 [2 3 5 7 11 13]
+
+  // Slice the slice to give it zero length.
+  s = s[:0]
+  printSlice(s) // Prints: len=0 cap=6 []
+
+  // Extend its length.
+  s = s[:4]
+  printSlice(s) // Prints: len=4 cap=6 [2 3 5 7]
+
+  // Drop its first two values.
+  s = s[2:]
+  printSlice(s) // Prints: len=2 cap=4 [5 7]
+}
+
+func printSlice(s []int) {
+  fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+```
+
+# Creating a slice with make
+
+The make function allocates a zeroed array and returns a slice that refers to that array:
+
+```go
+a := make([]int, 5)  // len(a)=5
+```
+
+To specify a capacity, pass a third argument to make:
+
+```go
+b := make([]int, 0, 5) // len(b)=0, cap(b)=5
+```
+
+# Range
+
+The `range` form of the `for` loop iterates over a slice or map.
+
+When ranging over a slice, two values are returned for each iteration. The first is the index, and the second is a copy of the element at that index.
+
+```go
+var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+
+func main() {
+  for i, v := range pow {
+    fmt.Printf("2**%d = %d\n", i, v)
+  }
+}
+```
+
+Returns:
+
+```
+2**0 = 1
+2**1 = 2
+2**2 = 4
+2**3 = 8
+2**4 = 16
+2**5 = 32
+2**6 = 64
+2**7 = 128
+```
+
+You can skip the `index` or value by assigning to `_`
+
+```go
+for i, _ := range pow
+for _, value := range pow
+```
+
+If you only want the index, you can omit the second variable.
+
+```go
+for i := range pow
+```
+
+# Maps
+
+A `map` maps keys to values.
+
+The zero value of a map is `nil`. A `nil` map has no keys, nor can keys be added.  
+The make function returns a map of the given type, initialized and ready for use.
+
+```go
+type Vertex struct {
+  Lat, Long float64
+}
+
+var m map[string]Vertex
+
+func main() {
+  m = make(map[string]Vertex)
+  m["Bell Labs"] = Vertex{
+    40.68433, -74.39967,
+  }
+  fmt.Println(m["Bell Labs"]) // Returns: {40.68433 -74.39967}
+}
+```
+
+# Map literals
+
+Map literals are like struct literals, but the keys are required
+
+```go
+type Vertex struct {
+  Lat, Long float64
+}
+
+var m = map[string]Vertex{
+  "Bell Labs": Vertex{
+    40.68433, -74.39967,
+  },
+  "Google": Vertex{
+    37.42202, -122.08408,
+  },
+}
+
+func main() {
+  fmt.Println(m) // Returns: map[Bell Labs:{40.68433 -74.39967} Google:{37.42202 -122.08408}]
+}
+```
+
+If the top-level type is just a type name, you can omit it from the elements of the literal:
+
+```go
+var m = map[string]Vertex{
+  "Bell Labs": {40.68433, -74.39967},
+  "Google":    {37.42202, -122.08408},
+}
+```
+
+# Mutating maps
+
+Insert or update an element in map m:
+
+```go
+m[key] = elem
+```
+
+Retrieve an element:
+
+```go
+elem = m[key]
+```
+
+Delete an element:
+
+```go
+delete(m, key)
+```
+
+Test that a key is present with a two-value assignment:
+
+```go
+elem, ok = m[key]
+```
+
+If `key` is in `m`, `ok` is `true.` If not, `ok` is `false`.
+
+If `key` is not in the map, then `elem` is the zero value for the map's element type.
+
+```go
+func main() {
+  m := make(map[string]int)
+
+  m["Answer"] = 42
+  fmt.Println("The value:", m["Answer"]) // Prints: The value: 42
+
+  m["Answer"] = 48
+  fmt.Println("The value:", m["Answer"]) // Prints: The value: 48
+
+  delete(m, "Answer")
+  fmt.Println("The value:", m["Answer"]) // Prints: The value: 0
+
+  v, ok := m["Answer"]
+  fmt.Println("The value:", v, "Present?", ok) // Prints: The value: 0 Present? false
+}
+```
+
+# Function values
+
+Functions are values too. They can be passed around just like other values.  
+Function values may be used as function arguments and return values.
+
+# Methods
+
+Go does not have classes. However, you can define methods on types.  
+A method is a function with a special **receiver** argument.  
+The receiver appears in its own argument list between the `func` keyword and the method name.
+
+In this example, the `Abs` method has a receiver of type `Vertex` named `v`:
+
+```go
+type Vertex struct {
+  X, Y float64
+}
+
+// (v Vertex) is the receiver
+func (v Vertex) Abs() float64 {
+  return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func main() {
+  v := Vertex{3, 4}
+  fmt.Println(v.Abs())
+}
+```
+
+# Methods are functions
+
+> Remember: a method is just a function with a receiver argument.
+
+Here's Abs written as a regular function with no change in functionality.
+
+```go
+type Vertex struct {
+  X, Y float64
+}
+
+func Abs(v Vertex) float64 {
+  return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func main() {
+  v := Vertex{3, 4}
+  fmt.Println(Abs(v))
+}
+```
+
+# Interfaces
+
+An interface type is defined as a set of method signatures.
+
+```go
+type Abser interface {
+  Abs() float64
+}
+```
+
+Under the hood, interface values can be thought of as a tuple of a value and a concrete type:
+
+```go
+(value, type)
+```
+
+Calling a method on an interface value executes the method of the same name on its underlying type
+
+# Type switches
+
+A type switch is a construct that permits several type assertions in series.
+
+```go
+switch v := i.(type) {
+case T:
+  // Here v has type T
+case S:
+  // Here v has type S
+default:
+  // No match; here v has the same type as i
+}
+```
 
 
-TODO continue from here https://go.dev/tour/moretypes/1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TODO continue from here https://go.dev/tour/concurrency/1
 
