@@ -1,1 +1,1 @@
-[#](#) Rust - Avanced traits
+# Rust - Avanced traits
