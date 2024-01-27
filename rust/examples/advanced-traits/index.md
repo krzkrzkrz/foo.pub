@@ -1,1 +1,1 @@
-# Hmm
+[#](#) Rust - Avanced traits
