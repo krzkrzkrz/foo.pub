@@ -1,4 +1,4 @@
-# Rust Journey
+[#](#) Rust Journey
 
 [Rust](https://www.rust-lang.org) A systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
 
@@ -36,7 +36,7 @@ more work to do.
 2. Read [RUST BY EXAMPLE](https://doc.rust-lang.org/rust-by-example). This is a great series of code snippets illustrating
 most of the language components. All examples are short, can be run directly (and even modified) in the books pages and they
 each illustrate a specific aspect of Rust programming. This will not take long study all of them, make sure you modify and play
-with each one, don't move on until you fully understand each chapter. After going through this, you'll be in a  good spot. Then
+with each one, don't move on until you fully understand each chapter. After going through this, you'll be in a good spot. Then
 it'll be time to bring it all home.
 
 3. Read [PROGRAMMING RUST](https://www.amazon.com/Programming-Rust-Fast-Systems-Development-ebook).
@@ -70,7 +70,13 @@ interface design, instead of reducing problems to fixed patterns
 curl https://sh.rustup.rs -sSf | sh
 ```
 
-## New project
+## Uninstall Rust and rustup
+
+```shell
+rustup self uninstall
+```
+
+## New [project](project)
 
 ```console
 cargo new foobar
@@ -79,7 +85,7 @@ cargo new foobar
 ## Updating Rust
 
 ```console
-rustup check
+rustup update
 ```
 
 ## Comments
@@ -108,6 +114,7 @@ println!("{:?}", name);
 
 * Signed integers are positive or negative numbers
 * Unsigned are only positive numbers
+* Integers default to `i32`
 
 | Length  | Signed            | Unsigned        |
 |---------|-------------------|-----------------|
@@ -122,10 +129,11 @@ println!("{:?}", name);
 
 * Floating-point numbers are represented according to the IEEE-754 standard
 * The `f32` type is a single-precision float, and `f64` has double precision
+* Floats default to `f64`
 
 ```rust
-    let x = 2.0; // f64
-    let y: f32 = 3.0; // f32
+let x = 2.0; // f64
+let y: f32 = 3.0; // f32
 ```
 
 ### Boolean types
@@ -155,11 +163,11 @@ let likely_false: bool = false;
 * Variables by default, are immutable (i.e. not subject to change)
 
 ```rust
-  let x = 5;
-  x = 6; // Returns an error
+let x = 5;
+x = 6; // Returns an error
 
-  let mut x = 5;
-  x = 6; // No error
+let mut x = 5;
+x = 6; // No error
 ```
 
 ## Strings
@@ -232,7 +240,7 @@ Using the `+` operator to combine `String`s
 let s1 = String::from("Hello ");
 let s2 = String::from("amazing ");
 let s3 = String::from("world!");
-let s4 = s1 + &s2 + &s3; // s7 has been moved here and can no longer be used
+let s4 = s1 + &s2 + &s3; // s1 has been moved here and can no longer be used
 println!("{}", s4); // Returns "Hello amazing world!""
 ```
 
@@ -271,6 +279,7 @@ println!("{}", is_one); // true
 * Grouping together some number of other values with a variety of types
 * Tuples are mainly used as a sort of minimal-drama struct type. i.e. to store width and height
 * Tuples allow constants as indices, like `t.4`. You cant write `t.i` or `t[i]` to get the `i`'th element
+* Are constructed using a `()`
 
 ```rust
 let tup: (&str, i32, f64, u8) = ("foo", 500, 6.4, 1);
@@ -286,6 +295,7 @@ println!("{}", tup.0) // Returns foo
 
 * Collection of similar types
 * You cant append new or remove elements
+* Are constructed using a `[]`
 
 ```rust
 let months: [&str; 12] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -347,6 +357,35 @@ let origin = Point(0, 0, 0);
 * Values can only be one of the variants
 * Each variant can have different types and amounts of associated data.
 
+3 types of enums:
+
+1. `Tuple structs`, which are, basically, named tuples.
+
+   ```rust
+   // A tuple struct
+   struct Pair(i32, f32);
+   ```
+
+2. The classic `C structs`
+
+   ```rust
+   // A C struct
+   #[derive(Debug)]
+   struct Person {
+       name: String,
+       age: u8,
+       x: f32,
+       y: f32,
+   }
+   ```
+
+3. `Unit structs`, which are field-less, are useful for generics.
+
+   ```rust
+   // A unit struct
+   struct Unit;
+   ```
+
 `enum` in its simplest form:
 
 ```rust
@@ -386,6 +425,63 @@ struct ChangeColorMessage(i32, i32, i32); // Tuple struct
 
 `enums` have the advantage of grouping up several variants into one entity
 
+## Type aliases
+
+If you use a type alias, you can refer to each enum variant via its alias.  
+This might be useful if the enum's name is too long or too generic, and you want to rename it.
+
+```rust
+enum VeryVerboseEnumOfThingsToDoWithNumbers {
+    Add,
+    Subtract,
+}
+
+// Creates a type alias
+type Operations = VeryVerboseEnumOfThingsToDoWithNumbers;
+
+fn main() {
+    // We can refer to each variant via its alias, not its long and inconvenient
+    // name.
+    let x = Operations::Add;
+}
+```
+
+The most common place you'll see this is in impl blocks using the `Self` alias.
+
+```rust
+enum VeryVerboseEnumOfThingsToDoWithNumbers {
+    Add,
+    Subtract,
+}
+
+impl VeryVerboseEnumOfThingsToDoWithNumbers {
+    fn run(&self, x: i32, y: i32) -> i32 {
+        match self {
+            Self::Add => x + y,
+            Self::Subtract => x - y,
+        }
+    }
+}
+```
+
+## Constants
+
+Two different types of `constants`:
+
+1. `const`: An unchangeable value (the common case).
+2. `static`: A possibly mutable variable with `'static` lifetime. The static lifetime is  
+   inferred and does not have to be specified. Accessing or modifying a mutable static variable is `unsafe`.
+
+```rust
+// Globals are declared outside all other scopes.
+static LANGUAGE: &str = "Rust";
+const THRESHOLD: i32 = 10;
+```
+
+Almost always, if you can choose between the two, choose `const.` It’s pretty rare that you actually want a  
+memory location associated with your constant, and using a `const` allows for optimizations like constant  
+propagation not only in your crate but downstream crates.
+
 ## Option type
 
 * Rust does not have `nulls`
@@ -412,6 +508,7 @@ let absent_number: Option<i32> = None;
 ## Match
 
 * Compare a value against a series of patterns and then execute code based on which pattern matches
+* All possible values must be covered (i.e. using `_ => ...`)
 
 ```rust
 fn main() {
@@ -430,6 +527,646 @@ fn get_string(number: Option<i32>) -> &'static str {
 }
 ```
 
+### Match can destructe
+
+A `match` block can destructure items in a variety of ways.
+
+**Tuples**
+
+```rust
+fn main() {
+    let triple = (0, -2, 3);
+
+    println!("Tell me about {:?}", triple);
+
+    // `..` can be used to ignore the rest of the tuple
+    match triple {
+        (0, y, z) => println!("First is `0`, `y` is {:?}, and `z` is {:?}", y, z), // Destructure the second and third elements
+        (1, ..)  => println!("First is `1` and the rest doesn't matter"),
+        (.., 2)  => println!("last is `2` and the rest doesn't matter"),
+        (3, .., 4)  => println!("First is `3`, last is `4`, and the rest doesn't matter"),
+        _      => println!("It doesn't matter what they are"), // `_` means don't bind the value to a variable
+    }
+}
+```
+
+Output:
+
+```
+Tell me about (0, -2, 3)
+First is `0`, `y` is -2, and `z` is 3
+```
+
+**Arrays**
+
+```rust
+fn main() {
+    // Try changing the values in the array, or make it a slice!
+    let array = [1, -2, 6];
+
+    match array {
+        // Binds the second and the third elements to the respective variables
+        [0, second, third] =>
+            println!("array[0] = 0, array[1] = {}, array[2] = {}", second, third),
+
+        // Single values can be ignored with _
+        [1, _, third] => println!(
+            "array[0] = 1, array[2] = {} and array[1] was ignored",
+            third
+        ),
+
+        // You can also bind some and ignore the rest
+        [-1, second, ..] => println!(
+            "array[0] = -1, array[1] = {} and all the other ones were ignored",
+            second
+        ),
+        // The code below would not compile
+        // [-1, second] => ...
+
+        // Or store them in another array/slice (the type depends on
+        // that of the value that is being matched against)
+        [3, second, tail @ ..] => println!(
+            "array[0] = 3, array[1] = {} and the other elements were {:?}",
+            second, tail
+        ),
+
+        // Combining these patterns, we can, for example, bind the first and
+        // last values, and store the rest of them in a single array
+        [first, middle @ .., last] => println!(
+            "array[0] = {}, middle = {:?}, array[2] = {}",
+            first, middle, last
+        ),
+    }
+}
+```
+
+Output:
+
+```
+array[0] = 1, array[2] = 6 and array[1] was ignored
+```
+
+**Enums**
+
+```rust
+// `allow` required to silence warnings because only
+// one variant is used.
+#[allow(dead_code)]
+enum Color {
+    // These 3 are specified solely by their name.
+    Red,
+    Blue,
+    Green,
+    // These likewise tie `u32` tuples to different names: color models.
+    RGB(u32, u32, u32),
+    HSV(u32, u32, u32),
+    HSL(u32, u32, u32),
+    CMY(u32, u32, u32),
+    CMYK(u32, u32, u32, u32),
+}
+
+fn main() {
+    let color = Color::RGB(122, 17, 40);
+
+    println!("What color is it?");
+
+    match color {
+        Color::Red   => println!("The color is Red!"),
+        Color::Blue  => println!("The color is Blue!"),
+        Color::Green => println!("The color is Green!"),
+        Color::RGB(r, g, b) => println!("Red: {}, green: {}, and blue: {}!", r, g, b),
+        Color::HSV(h, s, v) => println!("Hue: {}, saturation: {}, value: {}!", h, s, v),
+        Color::HSL(h, s, l) => println!("Hue: {}, saturation: {}, lightness: {}!", h, s, l),
+        Color::CMY(c, m, y) => println!("Cyan: {}, magenta: {}, yellow: {}!", c, m, y),
+        Color::CMYK(c, m, y, k) => println!("Cyan: {}, magenta: {}, yellow: {}, key (black): {}!", c, m, y, k),
+        // Don't need another arm (i.e. _) because all variants have been examined
+    }
+}
+```
+
+Output:
+
+```
+What color is it?
+Red: 122, green: 17, and blue: 40!
+```
+
+**Pointers / ref**
+
+```rust
+fn main() {
+    // Assign a reference of type `i32`. The `&` signifies there
+    // is a reference being assigned.
+    let reference = &4;
+
+    match reference {
+        // If `reference` is pattern matched against `&val`, it results
+        // in a comparison like:
+        // `&i32`
+        // `&val`
+        // ^ We see that if the matching `&`s are dropped, then the `i32`
+        // should be assigned to `val`.
+        &val => println!("Got a value via destructuring: {:?}", val),
+    }
+
+    // To avoid the `&`, you dereference before matching.
+    match *reference {
+        val => println!("Got a value via dereferencing: {:?}", val),
+    }
+
+    // What if you don't start with a reference? `reference` was a `&`
+    // because the right side was already a reference. This is not
+    // a reference because the right side is not one.
+    let _not_a_reference = 3;
+
+    // Rust provides `ref` for exactly this purpose. It modifies the
+    // assignment so that a reference is created for the element; this
+    // reference is assigned.
+    let ref _is_a_reference = 3;
+
+    // Accordingly, by defining 2 values without references, references
+    // can be retrieved via `ref` and `ref mut`.
+    let value = 77;
+    let mut mut_value = 6;
+
+    // Use `ref` keyword to create a reference.
+    match value {
+        ref r => println!("Got a reference to a value: {:?}", r),
+    }
+
+    // Use `ref mut` similarly.
+    match mut_value {
+        ref mut m => {
+            // Got a reference. Gotta dereference it before we can
+            // add anything to it.
+            *m += 10;
+            println!("We added 10. `mut_value`: {:?}", m);
+        },
+    }
+}
+```
+
+Output:
+
+```
+Got a value via destructuring: 4
+Got a value via dereferencing: 4
+Got a reference to a value: 77
+We added 10. `mut_value`: 16
+```
+
+**Structs**
+
+```rust
+fn main() {
+    struct Foo {
+        x: (u32, u32),
+        y: u32,
+    }
+
+    // Try changing the values in the struct to see what happens
+    let foo = Foo { x: (1, 2), y: 3 };
+
+    match foo {
+        Foo { x: (1, b), y } => println!("First of x is 1, b = {},  y = {} ", b, y),
+
+        // you can destructure structs and rename the variables,
+        // the order is not important
+        Foo { y: 2, x: i } => println!("y is 2, i = {:?}", i),
+
+        // and you can also ignore some variables:
+        Foo { y, .. } => println!("y = {}, we don't care about x", y),
+        // this will give an error: pattern does not mention field `x`
+        //Foo { y } => println!("y = {}", y),
+    }
+
+    let faa = Foo { x: (1, 2), y: 3 };
+
+    // You do not need a match block to destructure structs:
+    let Foo { x : x0, y: y0 } = faa;
+    println!("Outside: x0 = {x0:?}, y0 = {y0}");
+}
+```
+
+Output:
+
+```
+First of x is 1, b = 2,  y = 3 
+Outside: x0 = (1, 2), y0 = 3
+```
+
+### Match guards
+
+A `match guard` can be added to filter the arm
+
+```rust
+#[allow(dead_code)]
+enum Temperature {
+    Celsius(i32),
+    Fahrenheit(i32),
+}
+
+fn main() {
+    let temperature = Temperature::Celsius(35);
+
+    match temperature {
+        Temperature::Celsius(t) if t > 30 => println!("{}C is above 30 Celsius", t),
+        // The `if condition` part ^ is a guard
+        Temperature::Celsius(t) => println!("{}C is below 30 Celsius", t),
+        Temperature::Fahrenheit(t) if t > 86 => println!("{}F is above 86 Fahrenheit", t),
+        Temperature::Fahrenheit(t) => println!("{}F is below 86 Fahrenheit", t),
+        // Don't need another arm (i.e. _) because all variants have been examined
+    }
+}
+```
+
+### Binding
+
+Indirectly accessing a variable makes it impossible to branch and use that variable without re-binding.  
+`match` provides the `@` sigil for binding values to names
+
+```rust
+// A function `age` which returns a `u32`.
+fn age() -> u32 {
+    15
+}
+
+fn main() {
+    println!("Tell me what type of person you are");
+
+    match age() {
+        0             => println!("I haven't celebrated my first birthday yet"),
+        // Could `match` 1 ..= 12 directly but then what age
+        // would the child be? Instead, bind to `n` for the
+        // sequence of 1 ..= 12. Now the age can be reported.
+        n @ 1  ..= 12 => println!("I'm a child of age {:?}", n),
+        n @ 13 ..= 19 => println!("I'm a teen of age {:?}", n),
+        // Nothing bound. Return the result.
+        n             => println!("I'm an old person of age {:?}", n),
+    }
+}
+```
+
+### if-let
+
+For some use cases, when matching `enums`, `match` is awkward. For example:
+
+```rust
+// Make `optional` of type `Option<i32>`
+let optional = Some(7);
+
+match optional {
+    Some(i) => {
+        println!("This is a really long string and `{:?}`", i);
+        // ^ Needed 2 indentations just so we could destructure
+        // `i` from the option.
+    },
+    _ => {},
+    // ^ Required because `match` is exhaustive. Doesn't it seem
+    // like wasted space?
+};
+```
+
+`if let` is cleaner for this use case and in addition allows various failure options to be specified:
+
+```rust
+fn main() {
+    // All have type `Option<i32>`
+    let number = Some(7);
+    let letter: Option<i32> = None;
+    let emoticon: Option<i32> = None;
+
+    // The `if let` construct reads: "if `let` destructures `number` into
+    // `Some(i)`, evaluate the block (`{}`).
+    if let Some(i) = number {
+        println!("Matched {:?}!", i);
+    }
+
+    // If you need to specify a failure, use an else:
+    if let Some(i) = letter {
+        println!("Matched {:?}!", i);
+    } else {
+        // Destructure failed. Change to the failure case.
+        println!("Didn't match a number. Let's go with a letter!");
+    }
+
+    // Provide an altered failing condition.
+    let i_like_letters = false;
+
+    if let Some(i) = emoticon {
+        println!("Matched {:?}!", i);
+    // Destructure failed. Evaluate an `else if` condition to see if the
+    // alternate failure branch should be taken:
+    } else if i_like_letters {
+        println!("Didn't match a number. Let's go with a letter!");
+    } else {
+        // The condition evaluated false. This branch is the default:
+        println!("I don't like letters. Let's go with an emoticon :)!");
+    }
+}
+```
+
+Output:
+
+```
+Matched 7!
+Didn't match a number. Let's go with a letter!
+I don't like letters. Let's go with an emoticon :)!
+```
+
+**Take note**, `if let` can also be combined with an else, via `let else`
+
+### while-let
+
+Similar to `if let`, `while let` can make awkward match sequences more tolerable. Consider the following sequence that increments `i`
+
+```rust
+// Make `optional` of type `Option<i32>`
+let mut optional = Some(0);
+
+// Repeatedly try this test.
+loop {
+    match optional {
+        // If `optional` destructures, evaluate the block.
+        Some(i) => {
+            if i > 9 {
+                println!("Greater than 9, quit!");
+                optional = None;
+            } else {
+                println!("`i` is `{:?}`. Try again.", i);
+                optional = Some(i + 1);
+            }
+            // ^ Requires 3 indentations!
+        },
+        // Quit the loop when the destructure fails:
+        _ => { break; }
+        // ^ Why should this be required? There must be a better way!
+    }
+}
+```
+
+Using `while let` makes this sequence much nicer
+
+```rust
+// Make `optional` of type `Option<i32>`
+let mut optional = Some(0);
+
+// This reads: "while `let` destructures `optional` into
+// `Some(i)`, evaluate the block (`{}`). Else `break`.
+while let Some(i) = optional {
+    if i > 9 {
+        println!("Greater than 9, quit!");
+        optional = None;
+    } else {
+        println!("`i` is `{:?}`. Try again.", i);
+        optional = Some(i + 1);
+    }
+    // ^ Less rightward drift and doesn't require
+    // explicitly handling the failing case.
+}
+// ^ `if let` had additional optional `else`/`else if`
+// clauses. `while let` does not have these.
+```
+
+## Loops
+
+Rust provides a `loop` keyword to indicate an infinite loop.
+
+* The `break` statement can be used to exit a loop at anytime
+* The `continue` statement can be used to skip the rest of the iteration
+
+```rust
+fn main() {
+    let mut count = 0u32;
+
+    println!("Let's count until infinity!");
+
+    // Infinite loop
+    loop {
+        count += 1;
+
+        if count == 3 {
+            println!("three");
+
+            // Skip the rest of this iteration
+            continue;
+        }
+
+        println!("{}", count);
+
+        if count == 5 {
+            println!("OK, that's enough");
+
+            // Exit this loop
+            break;
+        }
+    }
+}
+```
+
+Outputs:
+
+```
+Let's count until infinity!
+1
+2
+three
+4
+5
+OK, that's enough
+```
+
+### Nesting and labels
+
+Loops must be annotated with some `'label`
+
+```rust
+#![allow(unreachable_code, unused_labels)]
+
+fn main() {
+    'outer: loop {
+        println!("Entered the outer loop");
+
+        'inner: loop {
+            println!("Entered the inner loop");
+
+            // This would break only the inner loop
+            //break;
+
+            // This breaks the outer loop
+            break 'outer;
+        }
+
+        println!("This point will never be reached");
+    }
+
+    println!("Exited the outer loop");
+}
+```
+
+Output:
+
+```
+Entered the outer loop
+Entered the inner loop
+Exited the outer loop
+```
+
+### Returning from loops
+
+Put the value after the `break`, and it will be returned by the loop expression
+
+```rust
+fn main() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!("Exited the loop, counter: {}", result); // Exited the loop, counter: 20
+}
+```
+
+## While loop
+
+The `while` keyword can be used to run a loop while a condition is true.
+
+```rust
+fn main() {
+    // A counter variable
+    let mut n = 1;
+
+    // Loop while `n` is less than 101
+    while n < 101 {
+        if n % 15 == 0 {
+            println!("fizzbuzz");
+        } else if n % 3 == 0 {
+            println!("fizz");
+        } else if n % 5 == 0 {
+            println!("buzz");
+        } else {
+            println!("{}", n);
+        }
+
+        // Increment counter
+        n += 1;
+    }
+}
+```
+
+## For loop
+
+The `for in` construct can be used to iterate through an `Iterator` (i.e. `a..b`)
+
+```rust
+fn main() {
+    // `n` will take the values: 1, 2, ..., 100 in each iteration
+    for n in 1..101 {
+        if n % 15 == 0 {
+            println!("fizzbuzz");
+        } else if n % 3 == 0 {
+            println!("fizz");
+        } else if n % 5 == 0 {
+            println!("buzz");
+        } else {
+            println!("{}", n);
+        }
+    }
+}
+```
+
+Alternatively, `a..=b` can be used for a range that is inclusive on both ends. The above can be written as:
+
+```rust
+fn main() {
+    // `n` will take the values: 1, 2, ..., 100 in each iteration
+    for n in 1..5..=100 {
+      // ...
+    }
+}
+```
+
+## iter, into_iter, iter_mut
+
+* `iter`, `into_iter`  and `iter_mut` all handle the conversion of a collection into an iterator in different ways
+* `for` loop will apply the `into_iter`
+
+**iter** - This borrows each element of the collection through each iteration. Thus leaving the collection  
+untouched and available for reuse after the loop
+
+
+```rust
+fn main() {
+    let names = vec!["Bob", "Frank", "Ferris"];
+
+    for name in names.iter() {
+        match name {
+            &"Ferris" => println!("There is a rustacean among us!"),
+            // TODO ^ Try deleting the & and matching just "Ferris"
+            _ => println!("Hello {}", name),
+        }
+    }
+
+    println!("names: {:?}", names); // "names" can be reused here, since match only borrowed the element
+}
+```
+
+Output:
+
+```
+Hello Bob
+Hello Frank
+There is a rustacean among us!
+names: ["Bob", "Frank", "Ferris"]
+```
+
+**into_iter** - This consumes the collection so that on each iteration the exact data is provided. Once the  
+collection has been consumed it is no longer available for reuse as it has been 'moved' within the loop
+
+```rust
+fn main() {
+    let names = vec!["Bob", "Frank", "Ferris"];
+
+    for name in names.into_iter() {
+        match name {
+            "Ferris" => println!("There is a rustacean among us!"),
+            _ => println!("Hello {}", name),
+        }
+    }
+
+    println!("names: {:?}", names); // Returns an error, because "names" was already consumed by match
+}
+```
+
+**iter_mut** - This mutably borrows each element of the collection, allowing for the collection to be  
+modified in place
+
+```rust
+fn main() {
+    let mut names = vec!["Bob", "Frank", "Ferris"];
+
+    for name in names.iter_mut() {
+        *name = match name {
+            &mut "Ferris" => "There is a rustacean among us!",
+            _ => "Hello",
+        }
+    }
+
+    println!("names: {:?}", names);
+}
+```
+
+Output:
+
+```
+names: ["Hello", "Hello", "There is a rustacean among us!"]
+```
+
 ## Functions
 
 ```rust
@@ -444,6 +1181,12 @@ fn main() {
 // Returns a 32 bit unsigned integer
 fn add_one(x: u32) -> u32 {
     x + 1
+}
+
+// Functions that don't return a value, actually return the unit type `()`
+// In which case, the return type can be omitted from the signature
+fn foobar(x: u32) -> () {
+    println!("foobar");
 }
 ```
 
@@ -540,6 +1283,40 @@ fn main() {
     //    height: 3
     //}
     println!("{:#?}", sq);
+}
+```
+
+## Closures
+
+* Closures are functions that can capture the enclosing environment
+
+```rust
+fn main() {
+    let outer_var = 42;
+
+    // A regular function can't refer to variables in the enclosing environment
+    //fn function(i: i32) -> i32 { i + outer_var }
+    // TODO: uncomment the line above and see the compiler error. The compiler
+    // suggests that we define a closure instead.
+
+    // Closures are anonymous, here we are binding them to references.
+    // Annotation is identical to function annotation but is optional
+    // as are the `{}` wrapping the body. These nameless functions
+    // are assigned to appropriately named variables.
+    let closure_annotated = |i: i32| -> i32 { i + outer_var };
+    let closure_inferred  = |i| i + outer_var;
+
+    // Call the closures.
+    println!("closure_annotated: {}", closure_annotated(1));
+    println!("closure_inferred: {}", closure_inferred(1));
+    // Once closure's type has been inferred, it cannot be inferred again with another type.
+    //println!("cannot reuse closure_inferred with another type: {}", closure_inferred(42i64));
+    // TODO: uncomment the line above and see the compiler error.
+
+    // A closure taking no arguments which returns an `i32`.
+    // The return type is inferred.
+    let one = || 1;
+    println!("closure returning one: {}", one());
 }
 ```
 
@@ -726,6 +1503,189 @@ fn main() {
 }
 ```
 
+### Super and self
+
+* The `self` keyword refers to the current module scope
+* The `super` keyword refers to the parent scope (i.e. outside a module)
+
+```rust
+fn function() {
+    println!("called `function()`");
+}
+
+mod cool {
+    pub fn function() {
+        println!("called `cool::function()`");
+    }
+}
+
+mod my {
+    fn function() {
+        println!("called `my::function()`");
+    }
+
+    mod cool {
+        pub fn function() {
+            println!("called `my::cool::function()`");
+        }
+    }
+
+    pub fn indirect_call() {
+        // Let's access all the functions named `function` from this scope!
+        print!("called `my::indirect_call()`, that\n> ");
+
+        // The `self` keyword refers to the current module scope - in this case `my`.
+        // Calling `self::function()` and calling `function()` directly both give
+        // the same result, because they refer to the same function.
+        self::function();
+        function();
+
+        // We can also use `self` to access another module inside `my`:
+        self::cool::function();
+
+        // The `super` keyword refers to the parent scope (outside the `my` module).
+        println!("here");
+        super::function();
+
+        // This will bind to the `cool::function` in the *crate* scope.
+        // In this case the crate scope is the outermost scope.
+        {
+            use crate::cool::function as root_function;
+            root_function();
+        }
+    }
+}
+
+fn main() {
+    my::indirect_call();
+}
+```
+
+Output:
+
+```
+called `my::indirect_call()`, that
+> called `my::function()`
+called `my::function()`
+called `my::cool::function()`
+called `function()`
+called `cool::function()`
+```
+
+## Attributes
+
+* An attribute is metadata applied to some module, crate or item
+* Attributes look like `#[outer_attribute]` or `#![inner_attribute]`
+
+### #[outer_attribute]
+
+Applies to the item immediately following it. Some examples of items are: a function, a module declaration,
+a constant, a structure, an enum. Here is an example where attribute `#[derive(Debug)]` applies to the struct `Rectangle`:
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+```
+
+### ![inner_attribute]
+
+Applies to the enclosing item (typically a module or a crate). In other words, this attribute is intepreted as applying to the entire scope in which it's place
+
+```rust
+// Applies to the whole crate (if placed in main.rs)
+#![allow(unused_variables)]
+
+fn main() {
+    let x = 3; // This would normally warn about an unused variable.
+}
+```
+
+### Sytaxes
+
+Attributes can take arguments with different syntaxes:
+
+```rust
+#[attribute = "value"]
+#[attribute(key = "value")]
+#[attribute(value)]
+
+// Attributes can have multiple values and can be separated over multiple lines, too
+#[attribute(value, value2)]
+#[attribute(value, value2, value3,
+            value4, value5)]
+```
+
+### Dead code
+
+Is an attribute that disables the `dead_code` lint
+
+```rust
+#[allow(dead_code)]
+fn unused_function() {}
+
+// Warning will trigger here
+fn noisy_unused_function() {}
+
+fn main() {
+    used_function();
+}
+```
+
+### cfg
+
+Configuration conditional checks are possible through two different operators:
+
+* The `cfg` attribute: `#[cfg(...)]` in attribute position
+* The `cfg!` macro: `cfg!(...)` in boolean expressions
+
+```rust
+// This function only gets compiled if the target OS is linux
+#[cfg(target_os = "linux")]
+fn are_you_on_linux() {
+    println!("You are running linux!");
+}
+
+// And this function only gets compiled if the target OS is *not* linux
+#[cfg(not(target_os = "linux"))]
+fn are_you_on_linux() {
+    println!("You are *not* running linux!");
+}
+
+fn main() {
+    are_you_on_linux();
+
+    println!("Are you sure?");
+    if cfg!(target_os = "linux") {
+        println!("Yes. It's definitely linux!");
+    } else {
+        println!("Yes. It's definitely *not* linux!");
+    }
+}
+```
+
+### Customer cfg conditions
+
+```rust
+#[cfg(some_condition)]
+fn conditional_function() {
+    println!("condition met!");
+}
+
+fn main() {
+    conditional_function();
+}
+```
+
+Then in console:
+
+```
+$ rustc --cfg some_condition custom.rs && ./custom
+condition met!
+```
+
 ## Vectors
 
 * Can only hold elements of one type
@@ -903,6 +1863,393 @@ fn main() {
 }
 ```
 
+## Generics
+
+* Generics are a way to reduce the need to write repetitive code and instead delegate this task
+  to the compiler while also making the code more flexible. Many languages support some way to
+  do this, even though they might call it something different
+* The simplest and most common use of generics is for type parameters
+* Generic type parameters" are typically represented as `<T>`
+* In Rust, "generic" also describes **anything that accepts one or more generic type parameters** `<T>`
+
+  For example, defining a *generic* function named `foo` that takes an argument `T` of any type:
+
+  ```rust
+  fn largest<T>(arg: &[T]) -> &T { ... }
+  ```
+
+  We read this definition as: the function `largest` is generic over some type `T`. This function has one parameter
+  named `arg`, which is a slice of values of type `T`. The `largest` function will return a reference to a value of the same type `T`.
+
+Think of *generics* as writing code with placeholder types instead of actual types. The actual types are inserted later.
+
+For example:
+
+```rust
+enum Option<T>{
+  Some(T),
+  None
+}
+```
+
+`T` is a type parameter. Whenever we use it with a type, compiler generates the enum definition tailored to that particular type.  
+For example, if we use `Option` for a `String`, the compiler will essentially generate a definition similar to the below:
+
+```rust
+enum StringOption{
+  Some(String),
+  None
+}
+```
+
+All of this happens at the compilation stage; thus, we don’t have to worry about defining distinct enums for each data type we
+want to use them with, and maintaining code for all of them.
+
+Another example:
+
+```rust
+// You define any type to take place of T and E, and the compiler will
+// generate and use a unique definition for each combination
+enum Result<T,E>{
+  Ok(T),
+  Err(E)
+}
+```
+
+Another example:
+
+```rust
+struct Wrapper<DataType>{
+  data:DataType
+}
+
+// Can give error sometimes. The compiler usually automatically detects the type to be filled
+// in for the generic type, but in this case, 5 can be u8 , u16, usize or quite a few other types
+// Thus, better to explicitly declare
+let d1 = Wrapper{data:5};
+
+// This is better, since the generic type is explicitly declared as u8
+let d1 : DataStore<u8> = DataStore{data:5}; // or:
+let d1 = DataStore{data:5_u8};
+
+let d2 = Wrapper{data:"data".to_owned()};
+```
+
+### Generics with trait bounds
+
+Trait bounds tells the compiler to only allow types to be substituted here if they match the methods signature
+which must be implemented by all the types which implement the trait
+
+To restrict a type parameter by traits, the syntax is:
+
+```rust
+fn fun<Type:trait1+trait2+...>(...){...}
+```
+
+For example, the `Eq` and `Ord` are two traits in the standard Rust library
+
+```rust
+fn sort<Sortable:Ord+Eq>(arr:&mut[Sortable]){ }
+
+// Can also be written out as:
+fn sort<Sortable>(arr:&mut [Sortable])
+where
+    Sortable:Ord+Eq,
+{
+}
+```
+
+## Lifetimes
+
+* `Lifetime` is a way to specify the scope for which a reference is valid
+
+Take for example something simple like:
+
+```rust
+fn main() {
+    let x = 5;
+    let y = 10;
+
+    let z = add(x, y);
+
+    println!("{}", z); // Returns 15
+}
+
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+```
+
+But now imagine you want to create a function that takes a reference to `x` and `y,` and returns a reference to the sum.  
+In other words, you want to avoid copying `x` and `y` into the function, and instead work with references to the original variables
+
+```rust
+fn main() {
+    let x = 5;
+    let y = 10;
+
+    let z = add(&x, &y);
+
+    println!("{}", z);
+}
+
+fn add(a: &i32, b: &i32) -> &i32 {
+    &(a + b)
+}
+```
+
+Will return an error. The problem is that the return type of add is a reference to the sum of `a` and `b`, but `a` and `b` are only
+temporary values that don't actually have a memory address. In other words, the reference returned by add would be pointing
+to a location in memory that doesn't actually exist
+
+This is where lifetimes come in. In order to fix this code, we need to tell Rust that the reference returned by `add` must
+have the same lifetime as the references passed to it. We do this by adding a lifetime parameter, `'a`, to the `add` function:
+
+```rust
+fn main() {
+    let x = 5;
+    let y = 10;
+
+    let z = add(&x, &y);
+
+    println!("{}", z);
+}
+
+fn add<'a>(a: &'a i32, b: &'a i32) -> &'a i32 {
+    &(a + b)
+}
+```
+
+Now the add function takes two references with the lifetime `'a`, and returns a reference with the same lifetime `'a`.
+This tells Rust that the reference returned by `add` is valid for the same lifetime as the references passed to it.
+
+In cases with multiple lifetimes, the syntax is similar:
+
+```rust
+foo<'a, 'b> // `foo` has lifetime parameters `'a` and `'b`
+```
+
+### Functions
+
+Function signatures with lifetimes have a few constraints:
+
+* Any reference *must* have an annotated lifetime
+* Any reference being returned *must* have the same lifetime as an input or be `static`
+
+```rust
+// One input reference with lifetime `'a` which must live
+// at least as long as the function.
+fn print_one<'a>(x: &'a i32) {
+    println!("`print_one`: x is {}", x);
+}
+
+// Mutable references are possible with lifetimes as well.
+fn add_one<'a>(x: &'a mut i32) {
+    *x += 1;
+}
+
+// Multiple elements with different lifetimes. In this case, it
+// would be fine for both to have the same lifetime `'a`, but
+// in more complex cases, different lifetimes may be required.
+fn print_multi<'a, 'b>(x: &'a i32, y: &'b i32) {
+    println!("`print_multi`: x is {}, y is {}", x, y);
+}
+
+// Returning references that have been passed in is acceptable.
+// However, the correct lifetime must be returned.
+fn pass_x<'a, 'b>(x: &'a i32, _: &'b i32) -> &'a i32 { x }
+```
+
+### Methods
+
+Methods are annotated similarly to functions
+
+```rust
+struct Owner(i32);
+
+impl Owner {
+    // Annotate lifetimes as in a standalone function.
+    fn add_one<'a>(&'a mut self) { self.0 += 1; }
+    fn print<'a>(&'a self) {
+        println!("`print`: {}", self.0);
+    }
+}
+
+fn main() {
+    let mut owner = Owner(18);
+
+    owner.add_one();
+    owner.print();
+}
+```
+
+### Structs
+
+Annotation of lifetimes in structures are also similar to functions
+
+```rust
+// A type `Borrowed` which houses a reference to an
+// `i32`. The reference to `i32` must outlive `Borrowed`.
+#[derive(Debug)]
+struct Borrowed<'a>(&'a i32);
+
+// Similarly, both references here must outlive this structure.
+#[derive(Debug)]
+struct NamedBorrowed<'a> {
+    x: &'a i32,
+    y: &'a i32,
+}
+
+// An enum which is either an `i32` or a reference to one.
+#[derive(Debug)]
+enum Either<'a> {
+    Num(i32),
+    Ref(&'a i32),
+}
+
+fn main() {
+    let x = 18;
+    let y = 15;
+
+    let single = Borrowed(&x);
+    let double = NamedBorrowed { x: &x, y: &y };
+    let reference = Either::Ref(&x);
+    let number    = Either::Num(y);
+
+    println!("x is borrowed in {:?}", single);
+    println!("x and y are borrowed in {:?}", double);
+    println!("x is borrowed in {:?}", reference);
+    println!("y is *not* borrowed in {:?}", number);
+}
+```
+
+### Traits
+
+Annotation of lifetimes in trait methods basically are similar to functions. Note that `impl` may have annotation of lifetimes too
+
+```rust
+// A struct with annotation of lifetimes.
+#[derive(Debug)]
+struct Borrowed<'a> {
+    x: &'a i32,
+}
+
+// Annotate lifetimes to impl.
+impl<'a> Default for Borrowed<'a> {
+    fn default() -> Self {
+        Self {
+            x: &10,
+        }
+    }
+}
+
+fn main() {
+    let b: Borrowed = Default::default();
+    println!("b is {:?}", b);
+}
+```
+
+### Bounds
+
+Just like generic types can be bounded, lifetimes (themselves generic) use bounds as well. The : character has a slightly different meaning here, but + is the same. Note how the following read:
+
+* `T: 'a`: All references in `T` must outlive lifetime `'a`
+* `T: Trait + 'a`: Type `T` must implement trait `Trait` and all references in `T` must outlive `'a`
+
+```rust
+use std::fmt::Debug; // Trait to bound with.
+
+#[derive(Debug)]
+struct Ref<'a, T: 'a>(&'a T);
+// `Ref` contains a reference to a generic type `T` that has
+// an unknown lifetime `'a`. `T` is bounded such that any
+// *references* in `T` must outlive `'a`. Additionally, the lifetime
+// of `Ref` may not exceed `'a`.
+
+// A generic function which prints using the `Debug` trait.
+fn print<T>(t: T) where
+    T: Debug {
+    println!("`print`: t is {:?}", t);
+}
+
+// Here a reference to `T` is taken where `T` implements
+// `Debug` and all *references* in `T` outlive `'a`. In
+// addition, `'a` must outlive the function.
+fn print_ref<'a, T>(t: &'a T) where
+    T: Debug + 'a {
+    println!("`print_ref`: t is {:?}", t);
+}
+
+fn main() {
+    let x = 7;
+    let ref_x = Ref(&x);
+
+    print_ref(&ref_x);
+    print(ref_x);
+}
+```
+
+### Static
+
+* Rust has a few reserved lifetime names. One of those is `'static`. You might encounter it in two situations
+* Both are related but subtly different and this is a common source for confusion when learning Rust:
+
+```rust
+// A reference with 'static lifetime:
+let s: &'static str = "hello world";
+
+// 'static as part of a trait bound:
+fn generic<T>(x: T) where T: 'static {}
+```
+
+#### Reference lifetine
+
+As a reference lifetime `'static` indicates that the data pointed to by the reference lives for the remaining lifetime of the running program
+
+There are two common ways to make a variable with `'static` lifetime, and both are stored in the read-only memory of the binary:
+
+1. Make a constant with the static declaration
+
+```rust
+// Make a constant with `'static` lifetime.
+static NUM: i32 = 18;
+```
+
+2. Make a string literal which has type: &'static str
+
+```rust
+// Returns a reference to `NUM` where its `'static`
+// lifetime is coerced to that of the input argument.
+fn coerce_static<'a>(_: &'a i32) -> &'a i32 {
+    &NUM
+}
+```
+
+#### Trait bound
+
+As a trait bound, it means the type does not contain any non-static references.
+Eg. the receiver can hold on to the type for as long as they want and it will never become invalid until they drop it.
+
+It's important to understand this means that any owned data always passes a `'static` lifetime bound, but a reference to that owned data generally does not:
+
+```rust
+use std::fmt::Debug;
+
+fn print_it( input: impl Debug + 'static ) {
+    println!( "'static value passed in is: {:?}", input );
+}
+
+fn main() {
+    // i is owned and contains no references, thus it's 'static:
+    let i = 5;
+    print_it(i);
+
+    // oops, &i only has the lifetime defined by the scope of
+    // main(), so it's not 'static:
+    print_it(&i);
+}
+```
+
 ## Generic types
 
 ### In `struct`'s
@@ -957,11 +2304,15 @@ fn main() {
 
 ## Traits
 
-* Functionality a particular type has and can share with other types
+* Share behaviour using `Trait`s
 
 ```rust
+// Summary trait has a method called summarize and its default
+// implementation is to return this "(Read more..)" string
 pub trait Summary {
-    fn summarize(&self) -> String;
+    fn summarize(&self) -> String {
+      String::from("(Read more..)")
+    };
 }
 
 pub struct FacebookMessage {
@@ -984,6 +2335,8 @@ impl Summary for FacebookMessage {
     }
 }
 
+// The TwitterMessage struct ovverides this defaults Summary traits implementation
+// and implements its on summarize method
 impl Summary for TwitterMessage {
     fn summarize(&self) -> String {
         format!("{}: {}", self.username, self.content)
@@ -1050,35 +2403,62 @@ pub fn notify(item: impl Summary) {
 
 ### Trait bounds
 
+Traits as paramaters can be written in two ways.
+
+**impl syntax**:
+
 ```rust
-// Both do the same
-// In general, you should use whatever form makes your code the most understandable.
-
 // Trait as arguments using impl:
-pub fn notify(item1: impl Summary, item2: impl Summary) {
-
-// More concise version via trait bounds:
-pub fn notify<T: Summary>(item1: T, item2: T) {
+pub fn notify(item1: &impl Summary, item2: &impl Summary) {
 ```
 
-### Multiple trait bounds with `+`
+The above works for straight forward cases. `impl` could be used for more concise code in simple cases.  
+In above case, `item1` and `item2` can be of *any* type. However, if the `item1` and `item2` have to be of the
+same type, then you cannot really do this with the `impl` syntax, you will need to use `trait bounds`
+
+**Trait bound syntax**:
 
 ```rust
-// Use T: Summary + Display to say T can be any type that implements Summary and Display
+// T is a generic type, item1 and item2 are both of type T
+pub fn notify<T: Summary>(item1: &T, item2: &T) {
+```
+
+### Specify Multiple traits with `+`
+
+Using the `impl` syntax:
+
+```rust
+// Its like saying, item1 must implement the Summary and the Display trait while item2 only implements
+// the Summary trait
+pub fn notify(item1: &(impl Summary + Display), item2: &impl Summary) {
+```
+
+Using the `trait bound` syntax:
+
+```rust
+// Its like saying, we have a generic type T that implements the Summary and Display traits
+// T is one type, item1 and item2 are both of type T
 pub fn notify<T: Summary + Display>(item1: T, item2: T) {
 ```
 
 ### `where`
 
-Consider the following code, consists of several trait bounds. Making the function signature hard to read:
+Specifying multiple `trait bounds` could make things harder to read:
 
 ```rust
+// Is like saying, we have a generic type T that implements the Display and Clone trait and
+// a generic type U which implements Clone and Debug
 fn some_function<T: Display + Clone, U: Clone + Debug>(t: T, u: U) -> i32 {
 ```
 
 This is better:
 
 ```rust
+// Here we are declaring some_function which declares two generics: T, U
+// The paramaters, (t: T, u: U), of this function use this generics
+// After the return type, -> i32, we specify the where clause
+// We are saying: where gerenct type T implements Display and Clone and
+// generic type U implements CLone and Debug
 fn some_function<T, U>(t: T, u: U) -> i32
     where T: Display + Clone,
           U: Clone + Debug
@@ -1223,11 +2603,7 @@ fn main() {
 // Dropping CustomSmartPointer with data `my stuff`!
 ```
 
-### Raw pointers
-
-* Raw pointers are unsafe, because Rust makes no attempt to track what it points to
-
-## 
+## Fearless concurrency
 
 ```rust
 ```
