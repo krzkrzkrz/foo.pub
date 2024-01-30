@@ -1,5 +1,7 @@
 # Rust - Lifetimes
 
+* `Lifetime` is a way to specify the scope for which a reference is valid
+
 Take for example something simple like:
 
 ```rust
