@@ -1,4 +1,4 @@
-[#](#) Rust Journey
+# Rust Journey
 
 [Rust](https://www.rust-lang.org) A systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
 
