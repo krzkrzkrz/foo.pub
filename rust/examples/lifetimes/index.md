@@ -289,5 +289,49 @@ fn main() {
 }
 ```
 
+## Generic Type Parameters, Trait Bounds, and Lifetimes Together
+
+Explanation follows in the sub-sections below
+
+```rust
+use std::fmt::Display;
+
+fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+    where T: Display
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+```
+
+### Lifetime annotations
+
+* Names of lifetime parameters must start with an apostrophe `'` and are usually all lowercase and very short
+* Most people use the name `'a`
+* We place lifetime parameter annotations after the `&` of a reference, using a space to separate the annotation from the reference's type
+
+```rust
+&i32        // A reference
+&'a i32     // A reference with an explicit lifetime
+&'a mut i32 // A mutable reference with an explicit lifetime
+```
+
+### Lifetime Annotations in Function Signatures
+
+```rust
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+```
+
+
 
 
