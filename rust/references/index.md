@@ -1,3 +1,3 @@
 # References
 
-* [Comments](references/comments/index.md)
+* [Comments](comments/index.md)
