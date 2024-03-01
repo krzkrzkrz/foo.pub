@@ -5,6 +5,10 @@
 Take for example something simple like:
 
 ```rust
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
 fn main() {
     let x = 5;
     let y = 10;
@@ -13,16 +17,16 @@ fn main() {
 
     println!("{}", z); // Returns 15
 }
-
-fn add(a: i32, b: i32) -> i32 {
-    a + b
-}
 ```
 
 But now imagine you want to create a function that takes a reference to `x` and `y,` and returns a reference to the sum.  
 In other words, you want to avoid copying `x` and `y` into the function, and instead work with references to the original variables
 
 ```rust
+fn add(a: &i32, b: &i32) -> &i32 {
+    &(a + b)
+}
+
 fn main() {
     let x = 5;
     let y = 10;
@@ -30,10 +34,6 @@ fn main() {
     let z = add(&x, &y);
 
     println!("{}", z);
-}
-
-fn add(a: &i32, b: &i32) -> &i32 {
-    &(a + b)
 }
 ```
 
@@ -45,6 +45,10 @@ This is where lifetimes come in. In order to fix this code, we need to tell Rust
 have the same lifetime as the references passed to it. We do this by adding a lifetime parameter, `'a`, to the `add` function:
 
 ```rust
+fn add<'a>(a: &'a i32, b: &'a i32) -> &'a i32 {
+    &(a + b)
+}
+
 fn main() {
     let x = 5;
     let y = 10;
@@ -52,10 +56,6 @@ fn main() {
     let z = add(&x, &y);
 
     println!("{}", z);
-}
-
-fn add<'a>(a: &'a i32, b: &'a i32) -> &'a i32 {
-    &(a + b)
 }
 ```
 
@@ -66,6 +66,47 @@ In cases with multiple lifetimes, the syntax is similar:
 
 ```rust
 foo<'a, 'b> // `foo` has lifetime parameters `'a` and `'b`
+```
+
+### Another example
+
+```rust
+// The return type (`&str`), contains a burrowed value, but its unclear if the burrowed type is from x or y
+// The Rust compiler cannot figure out what the relation between the lifetimes is. Meaning, during compile time
+// it cant determine to use x or y lifetime
+fn longest(x: &str, y: &str) -> &str {
+    // For example, we could pass in an x value which could be longer than the y value and would return x
+    if x.len() > y.len() {
+        x
+    // Or the x value could be shorter than the y value and would return y
+    } else {
+        y
+    }
+}
+
+fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is '{}'", result);
+}
+```
+
+Instead, should be written as:
+
+```rust
+// We need to define the relationship between all of these lifetimes
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    //     ^-- Generic lifetime, the same way you specify a generic type
+    // Now that we have a named lifetime ('a'), x, y and the return type str are defined to live as
+    // long as the named lifetime ('a')
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
 ```
 
 ### Functions

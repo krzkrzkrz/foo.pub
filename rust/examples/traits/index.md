@@ -51,22 +51,75 @@ println!("1 new tweet: {}", twitter_message.summarize()); // Returns: "1 new twe
 
 ### Trait defaults
 
+* Return the same information without writing the same function twice
+
 ```rust
-pub trait Summary {
+struct NewsArticle {
+    title: String,
+    content: String,
+}
+
+struct ShorterArticle {
+    title: String,
+}
+
+struct AnotherArticle {
+    title: String,
+}
+
+trait Summary {
+    // Implement a default function body (fn summarize) for the Summary trait that both structs can use
     fn summarize(&self) -> String {
         String::from("(Read more...)")
     }
 }
 
-let article = NewsArticle {
-    headline: String::from("Penguins win the Stanley Cup Championship!"),
-    location: String::from("Pittsburgh, PA, USA"),
-    author: String::from("Iceburgh"),
-    content: String::from("The Pittsburgh Penguins once again are the best
-    hockey team in the NHL."),
-};
+// No need to define "fn summarize" for each impl block, since it was already defined in the trait
+impl Summary for NewsArticle {} // Don't edit this line
+impl Summary for ShorterArticle {} // Don't edit this line
 
-println!("New article available! {}", article.summarize()); // Returns: "New article available! (Read more...)"
+// Unless there is another type (i.e. Struct) that needs to implement its own summarize method
+impl Summary for AnotherArticle {
+    fn summarize(&self) -> String {
+        String::from("-To be continued-")
+    }
+}
+
+fn main() {
+    let news_article = NewsArticle {
+        title: String::from("Penguins win the Stanley Cup Championship!"),
+        content: String::from(
+            "The Pittsburgh Penguins once again are the best hockey team in the NHL.",
+        ),
+    };
+
+    let shorter_article = ShorterArticle {
+        title: String::from("Penguins win the Stanley Cup Championship!"),
+    };
+
+    let another_article = AnotherArticle {
+        title: String::from("Wonderful sunny day today"),
+    };
+
+    println!(
+        "New article available! Title: {} Content: {} {}",
+        news_article.title,
+        news_article.content,
+        news_article.summarize()
+    ); // Returns: "New article available! Title: Penguins win the Stanley Cup Championship! Content: The Pittsburgh Penguins once again are the best hockey team in the NHL. (Read more...)"
+
+    println!(
+        "New shorter article available! Title: {} {}",
+        shorter_article.title,
+        shorter_article.summarize()
+    ); // Returns: "New shorter article available! Title: Penguins win the Stanley Cup Championship! (Read more...)"
+
+    println!(
+        "Another article available! Title: {} {}",
+        another_article.title,
+        another_article.summarize()
+    ); // Returns: "Another article available! Title: Wonderful sunny day today -To be continued-"
+}
 ```
 
 ### Traits within traits

@@ -39,13 +39,16 @@ each illustrate a specific aspect of Rust programming. This will not take long s
 with each one, don't move on until you fully understand each chapter. After going through this, you'll be in a good spot. Then
 it'll be time to bring it all home.
 
-3. Read [PROGRAMMING RUST](https://www.amazon.com/Programming-Rust-Fast-Systems-Development-ebook).
+3. Do the exercises in [Rustings](https://github.com/rust-lang/rustlings). Great way to start writing Rust code from what was
+taught in above materials. Use a video like https://www.youtube.com/watch?v=G3Vr-yswlaU while doing the exercises.
+
+4. Read [PROGRAMMING RUST](https://www.amazon.com/Programming-Rust-Fast-Systems-Development-ebook).
 This is a fantastic book and the perfect finishing touch in your Rust education. It goes deeper than the previous two,
 and having the others under your belt beforehand will make it more effective and much easier to go through. You don't really
-need to finish the book before moving on, just go over the first 6 to 8 chapters and then start Step 4 while continuing to
+need to finish the book before moving on, just go over the first 6 to 8 chapters and then start Step 5 while continuing to
 read the remaining chapters.
 
-4. This is where you start writing your own code. A few more bits of advice:
+5. This is where you start writing your own code. A few more bits of advice:
 
 - Use as basic a starting point as you can
 
@@ -425,6 +428,42 @@ struct ChangeColorMessage(i32, i32, i32); // Tuple struct
 
 `enums` have the advantage of grouping up several variants into one entity
 
+## Impl
+
+* Implement some functionality for a type
+* The `impl` keyword is primarily used to define implementations on types
+* `trait` implementations are used to implement traits for types, or other traits
+
+```rust
+struct Example {
+    number: i32,
+}
+
+impl Example {
+    fn boo() {
+        println!("boo! Example::boo() was called!");
+    }
+
+    fn answer(&mut self) {
+        self.number += 42;
+    }
+
+    fn get_number(&self) -> i32 {
+        self.number
+    }
+}
+
+trait Thingy {
+    fn do_thingy(&self);
+}
+
+impl Thingy for Example {
+    fn do_thingy(&self) {
+        println!("doing a thing! also, number is {}!", self.number);
+    }
+}
+```
+
 ## Type aliases
 
 If you use a type alias, you can refer to each enum variant via its alias.  
@@ -527,7 +566,7 @@ fn get_string(number: Option<i32>) -> &'static str {
 }
 ```
 
-### Match can destructe
+### Match can destructure
 
 A `match` block can destructure items in a variety of ways.
 
@@ -758,6 +797,29 @@ Outside: x0 = (1, 2), y0 = 3
 ### Match guards
 
 A `match guard` can be added to filter the arm
+
+```rust
+#[derive(PartialEq, Debug)]
+struct PositiveNonzeroInteger(u64);
+
+#[derive(PartialEq, Debug)]
+enum IntegerError {
+    Negative,
+    Zero,
+}
+
+fn main() {
+  let value: i32 = 10;
+  return match value {
+      num if num > 0 => PositiveNonzeroInteger(num),
+//    ^ "value" is assigned to "num". "if num > 0" is a guard
+      0 => Err(IntegerError::Zero),
+      _ => Err(IntegerError::Negative),
+  };
+}
+```
+
+A more complex example:
 
 ```rust
 #[allow(dead_code)]
@@ -1851,6 +1913,26 @@ fn main() {
 }
 ```
 
+### The ? operator
+
+* The `?` operator will take in a `Result`,
+* If `Err`, error will `return`
+* If `Ok`, then the result (unwrapped) will be returned
+
+For example:
+
+```rust
+pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
+    let cost_per_item = 5;
+
+    // parse returns a Result, if:
+    // Ok: then the value is assigned to qty
+    // Err: then a return is executed instead
+    let qty = item_quantity.parse::<i32>()?;
+    Ok(qty * cost_per_item)
+}
+```
+
 ### `.expect()`
 
 Returns: `thread 'main' panicked at 'Failed to open hello.txt: ...`
@@ -1862,30 +1944,6 @@ fn main() {
     let f = File::open("hello.txt").expect("Failed to open hello.txt");
 }
 ```
-
-## Closures (anonymous functions)
-
-* The closure definition comes after the `=`
-* A closure has params (separated by `,`)
-* Body of closure is inside the `{}`. These are optional if the closure body is a single expression
-* Annotation types of the parameters or the return value are not required like `fn` functions
-* Closures are usually short and relevant only within a narrow context
-
-```rust
-let foo = |bar, baz| {
-    // Body of clusure starts here
-    bar // Value returned
-};
-
-// Closure without {}, because the closure body has a single expression
-let foo = |bar, baz| bar + baz;
-
-// Adding optional type annotations of the parameter and return value types
-let foo = |bar: u32| -> u32 { ... };
-```
-
-`foo` is the name of the closure
-Closure has two parameters `bar` and `baz`
 
 ## Iterators
 
@@ -1921,6 +1979,9 @@ println!("{:?}", v2_iter.next()); // Returns Some(1)
 ### Box pointers
 
 * The easiest way to allocate value in the heap is to use a `Box::new`
+* You may not ever see `Box` again, depending on what kind work is being done. For
+  example, if you are building simple Rust web APIs, you may not see `Box` again
+  If you are recursive data structures, you may see `Box` again
 
 ```rust
 let t = (12, "eggs");
@@ -1957,6 +2018,31 @@ fn main() {
 // Dropping CustomSmartPointer with data `other stuff`!
 // Dropping CustomSmartPointer with data `my stuff`!
 ```
+
+## Closures (anonymous functions)
+
+* Like functions, but are anonymous and dont have a name
+* The closure definition comes after the `=`
+* A closure has params (separated by `,`)
+* Body of closure is inside the `{}`. These are optional if the closure body is a single expression
+* Annotation types of the parameters or the return value are not required like `fn` functions
+* Closures are usually short and relevant only within a narrow context
+
+```rust
+let foo = |bar, baz| {
+    // Body of clusure starts here
+    bar // Value returned
+};
+
+// Closure without {}, because the closure body has a single expression
+let foo = |bar, baz| bar + baz;
+
+// Adding optional type annotations of the parameter and return value types
+let foo = |bar: u32| -> u32 { ... };
+```
+
+`foo` is the name of the closure
+Closure has two parameters `bar` and `baz`
 
 ## Generics
 
