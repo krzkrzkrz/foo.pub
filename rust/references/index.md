@@ -11,4 +11,5 @@
 * [Strings](strings/index.md)
 * [Constants and statics](constants-and-statics/index.md)
 * [References and borrowing](references-and-borrowing/index.md)
+* [Mutable references](mutable-references/index.md)
 
