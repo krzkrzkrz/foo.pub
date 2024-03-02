@@ -1,7 +1,7 @@
 # Comments
 
-* // and /* */ are used for comments
-* /// is used for documentation comments
+* `//` and `/* */` are used for comments
+* `///` is used for documentation comments
 * Running `cargo doc --open` will generate documentation for your project and open it in your browser
 
 For example:
