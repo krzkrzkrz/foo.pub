@@ -42,13 +42,16 @@ it'll be time to bring it all home.
 3. Do the exercises in [Rustings](https://github.com/rust-lang/rustlings). Great way to start writing Rust code from what was
 taught in above materials. Use a video like https://www.youtube.com/watch?v=G3Vr-yswlaU while doing the exercises.
 
-4. Read [PROGRAMMING RUST](https://www.amazon.com/Programming-Rust-Fast-Systems-Development-ebook).
+4. Read [Learn Rust in a Month of Lunchesa](https://www.manning.com/books/learn-rust-in-a-month-of-lunches). A fantastic book
+that is a great supplement to the official Rust book
+
+5. Read [PROGRAMMING RUST](https://www.amazon.com/Programming-Rust-Fast-Systems-Development-ebook).
 This is a fantastic book and the perfect finishing touch in your Rust education. It goes deeper than the previous two,
 and having the others under your belt beforehand will make it more effective and much easier to go through. You don't really
 need to finish the book before moving on, just go over the first 6 to 8 chapters and then start Step 5 while continuing to
 read the remaining chapters.
 
-5. This is where you start writing your own code. A few more bits of advice:
+6. This is where you start writing your own code. A few more bits of advice:
 
 - Use as basic a starting point as you can
 

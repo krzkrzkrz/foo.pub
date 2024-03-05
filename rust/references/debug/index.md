@@ -32,3 +32,33 @@ fn main() {
     println!(" so this will be on the same line");
 }
 ```
+
+# Tabs and new lines
+
+`\t` and `\n` are escape sequences that represent tabs and new lines, respectively.
+
+```rust
+print!("\t Start with a tab\nand move to a new line");
+```
+
+Returns:
+
+```
+     Start with a tab
+and move to a new line
+```
+
+# Raw
+
+* Sometimes you end up using too many escape characters and just want Rust to print a
+  string as you see it. To do this, you can add `r#` to the beginning and `#` to the end
+
+```rust
+fn main() {
+    // We had to use \ eight times here—kind of annoying
+    println!("He said, \"You can find the file at c:\\files\\my_documents\\file.txt.\" Then I found the file.");
+
+    // Much better!
+    println!(r#"He said, "You can find the file at c:\files\my_documents\file.txt." Then I found the file."#);
+}
+```

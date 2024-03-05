@@ -14,4 +14,11 @@
 * [Mutable references](mutable-references/index.md)
 * [Copy](copy/index.md)
 * [Clone](clone/index.md)
+* [Printing](printing/index.md)
+* [Arrays](arrays/index.md)
+* [Vectors](vectors/index.md)
+* [Tuples](tuples/index.md)
+* [Conditions](conditions/index.md)
+* [Match](match/index.md)
+* [Loops](loops/index.md)
 
