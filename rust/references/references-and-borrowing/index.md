@@ -38,3 +38,44 @@ fn main() {
 }
 ```
 
+## References and the dot operator
+
+The following code would return an error, because `i32` and `&i32` are different types.  
+Its like comparing `i32 == &i32`
+
+```rust
+fn main() {
+    let my_number = 9;
+    let reference = &my_number;
+    println!("{}", my_number == reference); // Returns an error
+}
+```
+
+However, the following code would work, since `reference` is *dereferenced* to an `i32` and then compared to `my_number`:
+
+```rust
+fn main() {
+    let my_number = 9;
+    let reference = &my_number;
+    println!("{}", my_number == *reference); // Returns true
+}
+```
+
+Understanding above. Now take the following example:
+
+```rust
+fn main() {
+    let my_name = "Billy".to_string();
+    let single_ref = &my_name;
+    let double_ref = &&my_name; // A double reference
+    println!("{}", single_ref.is_empty()); // Returns false
+    println!("{}", double_ref.is_empty()); // Returns false
+}
+```
+
+The method `.is_empty()` is for the `String` type, but we called it on a `&String`.  
+This works, because the `.` operator will *dereference* for you until it reaches the original type
+
+Meaning, when you use the `.` operator on a reference, you dont need to worry about `*`
+
+

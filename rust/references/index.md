@@ -21,4 +21,8 @@
 * [Conditions](conditions/index.md)
 * [Match](match/index.md)
 * [Loops](loops/index.md)
+* [Structs](structs/index.md)
+* [Enums](enums/index.md)
+* [Impl](impl/index.md)
+* [Destructuring](destructuring/index.md)
 
