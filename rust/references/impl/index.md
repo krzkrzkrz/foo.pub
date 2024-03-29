@@ -15,18 +15,22 @@ enum AnimalType {
 
 #[derive(Debug)]
 struct Animal {
+    name: String,
     age: u8,
     animal_type: AnimalType,
+    nicknames: Vec<String>,
 }
 
 impl Animal {
     // Here, Self means Animal. You can also write Animal instead of Self
     // To the compiler, it is the same thing
-    fn new() -> Self {
+    fn new(name: &str) -> Self {
         // When we write Animal::new(), we always get a cat that is 10 years old
         Self {
+            name: name.to_string(),
             age: 10,
             animal_type: AnimalType::Cat,
+            nicknames: Vec::new(),
         }
     }
 
@@ -48,15 +52,20 @@ impl Animal {
         self.animal_type = AnimalType::Dog;
         println!("Changed animal to dog! Now it's {self:?}");
     }
+
+    fn add_nickname(&mut self, nickname: &str) {
+        self.nicknames.push(nickname.to_string());
+    }
 }
 
 fn main() {
     // This associated function will create a new Animal for us: a cat, 10 years old
-    let mut new_animal = Animal::new();
+    let mut new_animal = Animal::new("Harold");
+    new_animal.add_nickname("Harry");
     new_animal.check_type(); // The animal is a cat
-    new_animal.change_to_dog(); // Changed animal to dog! Now it's Animal { age: 10, animal_type: Dog }
+    new_animal.change_to_dog(); // Changed animal to dog! Now it's Animal { name: "Harold", age: 10, animal_type: Dog, nicknames: ["Harry"] }
     new_animal.check_type(); // The animal is a dog
-    new_animal.change_to_cat(); // Changed animal to cat! Now it's Animal { age: 10, animal_type: Cat }
+    new_animal.change_to_cat(); // Changed animal to cat! Now it's Animal { name: "Harold", age: 10, animal_type: Cat, nicknames: ["Harry"] }
     new_animal.check_type(); // The animal is a cat
 }
 ```

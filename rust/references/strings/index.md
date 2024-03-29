@@ -49,4 +49,18 @@ format!("Adrian Fahrenheit Țepeș");
 * From is clearer because you already know the types: you know that `String::from("Some str")`
   is a `String` from a `&str`. But with `.into()` sometimes the compiler doesn't know:
 
+5. In methods
 
+* If you have a `String` and pass a reference to it (a `&String`), Rust will convert it to a `&str` when you need it.
+* This is thanks to a trait called `Deref`
+
+```rust
+fn prints_str(my_str: &str) {
+    println!("{my_str}"); // Prints: I am a string
+}
+
+fn main() {
+    let my_string = String::from("I am a string");
+    prints_str(&my_string);
+}
+```

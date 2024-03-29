@@ -129,4 +129,57 @@ for i in &mut v {
 let v: Vec<i32> = (0..5).collect();
 ```
 
+## From trait
 
+* A trait used for value conversions between types
+
+For example:
+
+```rust
+fn main() {
+    let array_vec = Vec::from([8, 9, 10]);
+    println!("Vec from array: {array_vec:?}"); // Prints: Vec from array: [8, 9, 10]
+
+    // Prints the byte values of each character in the string
+    let str_vec = Vec::from("What kind of Vec am I?");
+    println!("Vec from str: {str_vec:?}"); // Prints: Vec from str: [87, 104, 97, 116, 32, 107, 105, 110, 100, 32, 111, 102, 32, 86, 101, 99, 32, 97, 109, 32, 73, 63]
+
+    // Prints the byte values of each character in the string
+    let string_vec = Vec::from("What will a String be?".to_string());
+    println!("Vec from String: {string_vec:?}"); // Prints: Vec from String: [87, 104, 97, 116, 32, 119, 105, 108, 108, 32, 97, 32, 83, 116, 114, 105, 110, 103, 32, 98, 101, 63]
+}
+```
+
+## Custom From trait
+
+* We can write our own custom `From` trait for our own types
+
+```rust
+struct Feet {
+    value: f64,
+}
+
+// Define a custom struct named `Meters`
+struct Meters {
+    value: f64,
+}
+
+// Implement the `From` trait for converting from `Feet` to `Meters`
+impl From<Feet> for Meters {
+    fn from(feet: Feet) -> Self {
+        // Conversion formula: 1 foot = 0.3048 meters
+        // Self refers to the type Meters. Could have also been written out as Meters { value: feet.value * 0.3048 }
+        Self {
+            value: feet.value * 0.3048,
+        }
+    }
+}
+
+fn main() {
+    let feet_length = Feet { value: 10.0 };
+    // Convert length from feet to meters using `From` trait
+    let meters_length: Meters = Meters::from(feet_length);
+
+    println!("Length in meters: {:.2}", meters_length.value); // Prints: Length in meters: 3.05
+}
+```
