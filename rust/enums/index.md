@@ -6,11 +6,13 @@
 There are 3 types of enums.
 
 ## 1. Tuple structs, which are, basically, named tuples
+
 ```rust
 // A tuple struct
 struct Pair(i32, f32);
    ```
  ## 2. The classic C structs
+
 ```rust
 // A C struct
 #[derive(Debug)]
@@ -22,6 +24,7 @@ struct Person {
 }
    ```
 ## 3. Unit structs, which are field-less, are useful for generics
+
 ```rust
 // A unit struct
 struct Unit;
@@ -57,4 +60,5 @@ struct MoveMessage {
 struct WriteMessage(String); // Tuple struct
 struct ChangeColorMessage(i32, i32, i32); // Tuple struct
 ```
+
 `enums` have the advantage of grouping up several variants into one entity

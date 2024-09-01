@@ -2,6 +2,7 @@
 
 * Like structs, but dont have names associated with their fields
 * They just have the types of the fields
+
 ```rust
 struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
