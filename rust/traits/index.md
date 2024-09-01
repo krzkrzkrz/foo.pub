@@ -7,23 +7,23 @@ trait Shape {
     fn area(&self) -> f64;
 }
 
-// Implement the `Shape` trait for a `Circle` struct
 struct Circle {
     radius: f64,
 }
 
+// Implement the `Shape` trait for a `Circle` struct
 impl Shape for Circle {
     fn area(&self) -> f64 {
         std::f64::consts::PI * self.radius * self.radius
     }
 }
 
-// Implement the `Shape` trait for a `Rectangle` struct
 struct Rectangle {
     width: f64,
     height: f64,
 }
 
+// Implement the `Shape` trait for a `Rectangle` struct
 impl Shape for Rectangle {
     fn area(&self) -> f64 {
         self.width * self.height

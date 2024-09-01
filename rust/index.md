@@ -82,6 +82,7 @@ interface design, instead of reducing problems to fixed patterns
 * [Booleans](booleans/index.md)
 * [Characters](characters/index.md)
 * [Variables](variables/index.md)
+* [Constants](constants/index.md)
 * [Strings](strings/index.md)
 * [Conditions](conditions/index.md)
 * [Tuples](tuples/index.md)
@@ -91,6 +92,14 @@ interface design, instead of reducing problems to fixed patterns
 * [Enums](enums/index.md)
 * [Impl](impl/index.md)
 * [Traits](traits/index.md)
+* [Type alias](type-alias/index.md)
+* [Options](options/index.md)
+* [Match](match/index.md)
+* [Match + destructure](match-plus-destructure/index.md)
+* [Match guards](match-guards/index.md)
+* [Binding](binding/index.md)
+* [If let](if-let/index.md)
+* [While let](while-let/index.md)
 
 
 
