@@ -76,6 +76,13 @@ interface design, instead of reducing problems to fixed patterns
 * [Updating Rust](updating-rust/index.md)
 * [Create a new project](create-a-new-project/index.md)
 * [Comments](comments/index.md)
+* [Debug](debug/index.md)
+* [Integers](integers/index.md)
+* [Floats](floats/index.md)
+* [Booleans](booleans/index.md)
+* [Characters](characters/index.md)
+* [Variables](variables/index.md)
+* [Strings](strings/index.md)
 
 
 
