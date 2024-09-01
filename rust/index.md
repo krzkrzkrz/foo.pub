@@ -87,7 +87,10 @@ interface design, instead of reducing problems to fixed patterns
 * [Tuples](tuples/index.md)
 * [Arrays](arrays/index.md)
 * [Structs](structs/index.md)
-* [Tuple strucrts](tuple-structs/index.md)
+* [Tuple structs](tuple-structs/index.md)
+* [Enums](enums/index.md)
+* [Impl](impl/index.md)
+* [Traits](traits/index.md)
 
 
 
