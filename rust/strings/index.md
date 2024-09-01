@@ -1,18 +1,16 @@
 # Strings
 
-* In Rust, strings are a more complicated data structure, than is apparent in other programming languages
+* In Rust, strings are a more complicated data structure, than is apparent in other
+  programming languages
 
 ## String concatenation
-
 ```rust
 let hello = "hello";
 let world = "world";
 
 println!("{} {}", hello, world);
 ```
-
 ## Strings and characters
-
 ```rust
 // This is a string with length of 1
 "a"
