@@ -83,6 +83,11 @@ interface design, instead of reducing problems to fixed patterns
 * [Characters](characters/index.md)
 * [Variables](variables/index.md)
 * [Strings](strings/index.md)
+* [Conditions](conditions/index.md)
+* [Tuples](tuples/index.md)
+* [Arrays](arrays/index.md)
+* [Structs](structs/index.md)
+* [Tuple strucrts](tuple-structs/index.md)
 
 
 
