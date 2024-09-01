@@ -3,6 +3,7 @@
 * Rust provides a `loop` keyword to indicate an infinite loop
 * The `break` statement can be used to exit a loop at anytime
 * The `continue` statement can be used to skip the rest of the iteration
+
 ```rust
 fn main() {
     let mut count = 0u32;
@@ -31,7 +32,9 @@ fn main() {
     }
 }
 ```
+
 Outputs:
+
 ```
 Let's count until infinity!
 1
@@ -41,9 +44,11 @@ three
 5
 OK, that's enough
 ```
+
 ## Returning from loops
 
 * Put the value after the `break`, and it will be returned by the loop expression
+
 ```rust
 fn main() {
     let mut counter = 0;

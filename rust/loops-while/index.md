@@ -1,6 +1,7 @@
 # Loops: While
 
 * The `while` keyword can be used to run a loop while a condition is true
+
 ```rust
 fn main() {
     // A counter variable
@@ -23,4 +24,3 @@ fn main() {
     }
 }
 ```
-

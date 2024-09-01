@@ -3,6 +3,7 @@
 * Compare a value against a series of patterns and then execute code based on which
   pattern matches
 * All possible values must be covered (i.e. using `_ => ...`)
+
 ```rust
 fn main() {
     println!("{}", get_string(Some(1))); // Returns "one"

@@ -1,6 +1,7 @@
 # While let
 
 * Similar to `if let`, `while let` can make awkward match sequences more tolerable
+
 ```rust
 fn main() {
     let mut values = vec![1, 2, 3, 4];

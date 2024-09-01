@@ -3,6 +3,7 @@
 * A `match` block can destructure items in a variety of ways
 
 **Tuples**
+
 ```rust
 fn main() {
     let triple = (0, -2, 3);
@@ -24,7 +25,9 @@ Output:
 Tell me about (0, -2, 3)
 First is `0`, `y` is -2, and `z` is 3
 ```
+
 **Arrays**
+
 ```rust
 fn main() {
     // Try changing the values in the array, or make it a slice!
@@ -65,11 +68,15 @@ fn main() {
     }
 }
 ```
+
 Output:
+
 ```
 array[0] = 1, array[2] = 6 and array[1] was ignored
 ```
+
 **Enums**
+
 ```rust
 // `allow` required to silence warnings because only
 // one variant is used.
@@ -105,12 +112,16 @@ fn main() {
     }
 }
 ```
+
 Output:
+
 ```
 What color is it?
 Red: 122, green: 17, and blue: 40!
 ```
+
 **Pointers / ref**
+
 ```rust
 fn main() {
     // Assign a reference of type `i32`. The `&` signifies there
@@ -163,14 +174,18 @@ fn main() {
     }
 }
 ```
+
 Output:
+
 ```
 Got a value via destructuring: 4
 Got a value via dereferencing: 4
 Got a reference to a value: 77
 We added 10. `mut_value`: 16
 ```
+
 **Structs**
+
 ```rust
 fn main() {
     struct Foo {
@@ -201,7 +216,9 @@ fn main() {
     println!("Outside: x0 = {x0:?}, y0 = {y0}");
 }
 ```
+
 Output:
+
 ```
 First of x is 1, b = 2,  y = 3 
 Outside: x0 = (1, 2), y0 = 3

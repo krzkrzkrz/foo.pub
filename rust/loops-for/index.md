@@ -1,6 +1,7 @@
 # Loops: For
 
 * The `for in` construct can be used to iterate through an `Iterator` (i.e. `a..b`)
+
 ```rust
 fn main() {
     // `n` will take the values: 1, 2, ..., 100 in each iteration
@@ -17,8 +18,10 @@ fn main() {
     }
 }
 ```
+
 Alternatively, `a..=b` can be used for a range that is inclusive on both ends. The
 above can be written as:
+
 ```rust
 fn main() {
     // `n` will take the values: 1, 2, ..., 100 in each iteration

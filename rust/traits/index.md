@@ -1,6 +1,7 @@
 # Traits
 
 * `trait` implementations are used to implement traits for types, or other traits
+
 ```rust
 // Define a trait called `Shape` with a method signature `area`
 trait Shape {

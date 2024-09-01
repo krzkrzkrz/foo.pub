@@ -1,6 +1,7 @@
 # Loops: Nesting and labels
 
-Loops must be annotated with some `'label`
+* Loops must be annotated with some `'label`
+
 ```rust
 #![allow(unreachable_code, unused_labels)]
 fn main() {
@@ -20,7 +21,9 @@ fn main() {
     println!("Exited the outer loop");
 }
 ```
+
 Output:
+
 ```
 Entered the outer loop
 Entered the inner loop

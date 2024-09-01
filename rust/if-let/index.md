@@ -1,6 +1,7 @@
 # If let
 
-For some use cases, when matching `enums`, `match` is awkward. For example:
+* For some use cases, when matching `enums`, `match` is awkward. For example:
+
 ```rust
 // Make `optional` of type `Option<i32>`
 let optional = Some(7);
@@ -31,13 +32,17 @@ fn main() {
     }
 }
 ```
+
 Output:
+
 ```
 The value is: 7
 ```
+
 ## let else
 
 * `if let` can also be combined with an else, via `let else`
+
 ```rust
 fn main() {
     let some_value: Option<i32> = None;

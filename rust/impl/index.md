@@ -3,6 +3,7 @@
 * Implement some functionality for a type
 * The `impl` keyword is primarily used to define implementations on types
 * `trait` implementations are used to implement traits for types, or other traits
+
 ```rust
 struct Rectangle {
     width: u32,

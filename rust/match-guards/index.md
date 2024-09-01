@@ -1,6 +1,7 @@
 # Match guards
 
-A `match guard` can be added to filter the arm
+* A `match guard` can be added to filter the arm
+
 ```rust
 #[derive(PartialEq, Debug)]
 struct PositiveNonzeroInteger(u64);
@@ -21,7 +22,9 @@ fn main() {
   };
 }
 ```
+
 ## A more complex example
+
 ```rust
 #[allow(dead_code)]
 enum Temperature {
@@ -42,4 +45,3 @@ fn main() {
     }
 }
 ```
-

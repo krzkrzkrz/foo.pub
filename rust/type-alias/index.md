@@ -2,6 +2,7 @@
 
 * If you use a type alias, you can refer to each enum variant via its alias
 * This might be useful if the enum's name is too long or too generic, and you want to rename it
+
 ```rust
 enum VeryVerboseEnumOfThingsToDoWithNumbers {
     Add,
@@ -17,7 +18,9 @@ fn main() {
     let x = Operations::Add;
 }
 ```
+
 The most common place you'll see this is in impl blocks using the `Self` alias.
+
 ```rust
 enum VeryVerboseEnumOfThingsToDoWithNumbers {
     Add,
