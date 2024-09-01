@@ -3,7 +3,6 @@
 * Collection of similar types
 * You cant append new or remove elements
 * Are constructed using a `[]`
-
 ```rust
 let months: [&str; 12] = [
     "January",
