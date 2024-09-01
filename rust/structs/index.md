@@ -1,6 +1,7 @@
 # Structs
 
 * Collection of different types
+
 ```rust
 #[derive(Debug)]
 struct User {
