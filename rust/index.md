@@ -74,7 +74,7 @@ interface design, instead of reducing problems to fixed patterns
 
 * [Installation](installation/index.md)
 * [Updating Rust](updating-rust/index.md)
-* [Create a new project](create-a-new-project/readme.md)
+* [Create a new project](create-a-new-project/index.md)
 * [Comments](comments/index.md)
 
 
