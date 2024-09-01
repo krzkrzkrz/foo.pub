@@ -100,6 +100,7 @@ interface design, instead of reducing problems to fixed patterns
 * [Binding](binding/index.md)
 * [If let](if-let/index.md)
 * [While let](while-let/index.md)
+* [Loops](loops/index.md)
 
 
 
