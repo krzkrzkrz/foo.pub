@@ -101,6 +101,10 @@ interface design, instead of reducing problems to fixed patterns
 * [If let](if-let/index.md)
 * [While let](while-let/index.md)
 * [Loops](loops/index.md)
+* [Loops: Nesting and labels](loops-nesting-and-labels/index.md)
+* [Loops: While](loops-while/index.md)
+* [Loops: For](loops-for/index.md)
+* [Iters](iters/index.md)
 
 
 

@@ -41,4 +41,22 @@ three
 5
 OK, that's enough
 ```
+## Returning from loops
+
+* Put the value after the `break`, and it will be returned by the loop expression
+```rust
+fn main() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!("Exited the loop, counter: {}", result); // Exited the loop, counter: 20
+}
+```
 
