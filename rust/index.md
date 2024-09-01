@@ -73,4 +73,19 @@ interface design, instead of reducing problems to fixed patterns
 # Topics
 
 * [Installation](installation/index.md)
+* [Updating Rust](updating-rust/index.md)
+* [Create a new project](create-a-new-project/readme.md)
+* [Comments](comments/index.md)
+
+
+
+
+
+
+
+
+
+
+
+
 
