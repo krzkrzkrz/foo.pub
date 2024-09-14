@@ -20,6 +20,9 @@ func main() {
     fmt.Println("Too far away.")
   }
 }
+// Returns:
+// When's Saturday?
+// Today.
 ```
 
 ## Swith without a condition
@@ -27,6 +30,7 @@ func main() {
 ```go
 func main() {
   t := time.Now()
+
   switch {
   case t.Hour() < 12:
     fmt.Println("Good morning!")
