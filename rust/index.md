@@ -105,11 +105,13 @@ interface design, instead of reducing problems to fixed patterns
 * [Loops: While](loops-while/index.md)
 * [Loops: For](loops-for/index.md)
 * [Iters](iters/index.md)
-
-
-
-
-
+* [Iters: Into iter](into_iter/index.md)
+* [Iters: Iter mut](iter_mut/index.md)
+* [Functions](functions/index.md)
+* [Functions: Advanced](functions-advanced/index.md)
+* [Functions: Associated functions](functions-associated-functions/index.md)
+* [Methods](methods/index.md)
+* [Closures](closures/index.md)
 
 
 
