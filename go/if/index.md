@@ -1,7 +1,7 @@
 # If
 
-Go's `if` statements are like its `for` loops; the expression need not be surrounded by
-parentheses `( )` but the braces `{ }` are required.
+* Go's `if` statements are like its `for` loops; the expression need not be surrounded by
+  parentheses `( )` but the braces `{ }` are required.
 
 ```go
 func sqrt(x float64) string {
@@ -16,10 +16,10 @@ func main() {
 }
 ```
 
-# If with a short statement
+## If with a short statement
 
-Like `for`, the `if` statement can start with a short statement to execute before the condition.  
-Variables declared by the statement are only in scope until the end of the if.
+* Like `for`, the `if` statement can start with a short statement to execute before the condition
+* Variables declared by the statement are only in scope until the end of the if
 
 ```go
 func add(x, y int) int {

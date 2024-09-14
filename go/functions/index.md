@@ -13,13 +13,16 @@ func main() {
 }
 ```
 
-When two or more consecutive named function parameters share a type, you can omit the type from all but the last.
+* When two or more consecutive named function parameters share a type, you can omit the type
+  from all but the last
 
 ```go
 func add(x int, y int) int {
   return x + y
 }
 ```
+
+Can be written as:
 
 ```go
 func add(x, y int) int {

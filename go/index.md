@@ -6,6 +6,7 @@
 
 * [A tour of go](https://go.dev/tour/welcome/1)
 
+* [Naming conventions](naming-conventions/index.md)
 * [Installation](installation/index.md)
 * [Creating a new project](creating-a-new-project/index.md)
 * [Packages](packages/index.md)
@@ -18,6 +19,7 @@
 * [Constants](constants/index.md)
 * [For loop](for-loop/index.md)
 * [If](if/index.md)
+* [Else](else/index.md)
 * [Switch](switch/index.md)
 * [Defer](defer/index.md)
 * [Poiners](poiners/index.md)
