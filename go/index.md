@@ -32,55 +32,12 @@
 * [Function closures](function-closures/index.md)
 * [Methods](methods/index.md)
 * [Intefaces](interfaces/index.md)
-
-# Type switches
-
-A type switch is a construct that permits several type assertions in series.
-
-```go
-switch v := i.(type) {
-case T:
-  // Here v has type T
-case S:
-  // Here v has type S
-default:
-  // No match; here v has the same type as i
-}
-```
+* [Type assertions](time-assertions/index.md)
+* [Type switches](time-switches/index.md)
+* [Stringers](stringers/index.md)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-TODO continue from here https://go.dev/tour/concurrency/1
-
+TODO continue from here https://go.dev/tour/methods/19 (Errors)
