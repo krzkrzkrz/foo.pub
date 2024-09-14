@@ -1,11 +1,11 @@
 # For loop
 
-Go has only one looping construct, the `for` loop.  
-The basic for loop has three components separated by semicolons:
+* Go has only one looping construct, the `for` loop
+* The basic for loop has three components separated by semicolons:
 
-- The `init` statement: executed before the first iteration
-- The `condition expression`: evaluated before every iteration
-- The `post` statement: executed at the end of every iteration
+  * The `init` statement: executed before the first iteration
+  * The `condition expression`: evaluated before every iteration
+  * The `post` statement: executed at the end of every iteration
 
 ```go
 func main() {

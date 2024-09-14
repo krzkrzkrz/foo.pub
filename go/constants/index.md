@@ -1,11 +1,10 @@
 # Constants
 
-Constants are declared like variables, but with the `const` keyword.  
-Constants can be character, string, boolean, or numeric values.  
-Constants cannot be declared using the := syntax.
+* Constants are declared like variables, but with the `const` keyword
+* Constants can be character, string, boolean, or numeric values
+* Constants cannot be declared using the `:=` syntax
 
 ```go
-
 const Pi = 3.14
 
 func main() {
@@ -18,9 +17,9 @@ func main() {
 }
 ```
 
-# Numeric constants
+## Numeric constants
 
-Numeric constants are high-precision values.
+* Numeric constants are high-precision values.
 
 ```go
 const (

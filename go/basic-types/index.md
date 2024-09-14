@@ -24,7 +24,6 @@ complex64 complex128
 The example shows variables of several types, and also that variable declarations may be "factored" into blocks, as with import statements.
 
 ```go
-
 var (
   ToBe   bool       = false
   MaxInt uint64     = 1<<64 - 1
@@ -37,61 +36,4 @@ func main() {
   fmt.Printf("Type: %T Value: %v\n", z, z)
 }
 ```
-
-# Zero values
-
-Variables declared without an explicit initial value are given their zero value.
-
-The zero value is:
-
-- `0` for numeric types,
-- `false` for the boolean type, and
-- `""` (the empty string) for strings.
-
-```go
-func main() {
-  var i int
-  var f float64
-  var b bool
-  var s string
-  fmt.Printf("%v %v %v %q\n", i, f, b, s)
-}
-```
-
-# Type conversions
-
-The expression `T(v)` converts the value `v` to the type `T`.
-
-```go
-var i int = 42
-var f float64 = float64(i)
-var u uint = uint(f)
-```
-
-Or simple:
-
-```go
-i := 42
-f := float64(i)
-u := uint(f)
-```
-
-# Type inference
-
-When declaring a variable without specifying an explicit type (either by using the := syntax or var = expression syntax),  
-the variable's type is inferred from the value on the right hand side.
-
-When the right hand side of the declaration is typed, the new variable is of that same type:
-
-```go
-var i int
-j := i // j is an int
-```
-
-```go
-i := 42           // int
-f := 3.142        // float64
-g := 0.867 + 0.5i // complex128
-```
-
 
