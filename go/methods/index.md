@@ -1,7 +1,7 @@
 # Methods
 
 * Go does not have classes. However, you can define methods on types
-* A method is a function with a special **receiver** argument
+* A method **is a function** with a special **receiver** argument
 * The receiver appears in its own argument list between the `func` keyword and the method name
 
 In this example, the `fullName` method has a **receiver** of type `Person` named `p`:
@@ -19,6 +19,7 @@ type Person struct {
 
 // Method to get the full name of the person
 // (p Person) is the "receiver"
+// fullname() is the method name
 func (p Person) fullName() string {
 	return p.firstName + " " + p.lastName
 }

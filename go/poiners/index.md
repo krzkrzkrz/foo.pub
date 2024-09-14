@@ -1,6 +1,8 @@
 # Pointers
 
-Go has pointers. A pointer holds the memory address of a value.
+* A pointer holds the memory address of a value
+* The `&` operator generates a pointer to its operand.
+* The `*` operator denotes the pointer's underlying value.
 
 The type `*T` is a pointer to a `T` value. Its zero value is `nil.`
 
@@ -8,19 +10,21 @@ The type `*T` is a pointer to a `T` value. Its zero value is `nil.`
 var p *int
 ```
 
-The `&` operator generates a pointer to its operand.
+An example:
 
 ```go
-i := 42
-p = &i
+func main() {
+	var p *int
+
+	i := 42
+	p = &i
+
+	// Read i through the pointer p
+	fmt.Println(*p) // Prints: 42
+
+	// Set i through the pointer p
+	*p = 21 // This is known as "dereferencing" or "indirecting"
+	fmt.Println(*p) // Prints: 21
+}
 ```
-
-The `*` operator denotes the pointer's underlying value.
-
-```go
-fmt.Println(*p) // read i through the pointer p
-*p = 21         // set i through the pointer p
-```
-
-This is known as "dereferencing" or "indirecting".
 

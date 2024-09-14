@@ -1,13 +1,11 @@
 # Slices
 
-An array has a fixed size. A slice, on the other hand, is a dynamically-sized,
-flexible view into the elements of an array. In practice, slices are much more common than arrays
-
-The type `[]T` is a slice with elements of type `T`  
-This selects a half-open range which includes the first element, but excludes the last one. Also
-known as an `exclusive range`
-
-Think of it as `[inclusive:exclusive]T`
+* An array has a fixed size. A slice, on the other hand, is a dynamically-sized, flexible view
+  into the elements of an array. In practice, slices are much more common than arrays
+* The type `[]T` is a slice with elements of type `T`
+  This selects a half-open range which includes the first element, but excludes the last one. Also
+  known as an `exclusive range`
+* Think of it as `[inclusive:exclusive]T`
 
 The following expression creates a slice which includes elements 1 through 3 of `a`:
 
@@ -25,9 +23,9 @@ func main() {
 }
 ```
 
-Slices are like references to arrays  
-A slice does not store any data, it just describes a section of an underlying array  
-Changing the elements of a slice modifies the corresponding elements of its underlying array
+* Slices are like references to arrays
+* A slice does not store any data, it just describes a section of an underlying array
+* Changing the elements of a slice modifies the corresponding elements of its underlying array
 
 ```go
 func main() {
@@ -138,5 +136,4 @@ To specify a capacity, pass a third argument to make:
 ```go
 b := make([]int, 0, 5) // len(b)=0, cap(b)=5
 ```
-
 

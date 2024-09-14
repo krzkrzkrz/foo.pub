@@ -2,7 +2,7 @@
 
 * A `map` maps keys to values
 * The zero value of a map is `nil`. A `nil` map has no keys, nor can keys be added
-* The make function returns a map of the given type, initialized and ready for use
+* The `make` function returns a map of the given type, initialized and ready for use
 
 ```go
 package main
@@ -21,6 +21,19 @@ func main() {
 	m = make(map[string]Coords)
 	m["Bell Labs"] = Coords{
 		40.68433, -74.39967,
+	}
+
+
+	fmt.Println(m["Bell Labs"]) // Returns: {40.68433 -74.39967}
+}
+```
+
+Another way of writing this:
+
+```go
+func main() {
+	m := map[string]Coords{
+		"Bell Labs": {40.68433, -74.39967},
 	}
 
 	fmt.Println(m["Bell Labs"]) // Returns: {40.68433 -74.39967}

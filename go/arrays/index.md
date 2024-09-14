@@ -17,6 +17,7 @@ func main() {
   a[0] = "Hello"
   a[1] = "World"
   // a[10] = "World" // Will result in an error: invalid array index 10 (out of bounds for 2-element array)
+
   fmt.Println(a[0], a[1]) // Prints: Hello World
   fmt.Println(a)          // Prints: [Hello World]
 

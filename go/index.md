@@ -31,24 +31,7 @@
 * [Function values](function-values/index.md)
 * [Function closures](function-closures/index.md)
 * [Methods](methods/index.md)
-
-# Interfaces
-
-An interface type is defined as a set of method signatures.
-
-```go
-type Abser interface {
-  Abs() float64
-}
-```
-
-Under the hood, interface values can be thought of as a tuple of a value and a concrete type:
-
-```go
-(value, type)
-```
-
-Calling a method on an interface value executes the method of the same name on its underlying type
+* [Intefaces](interfaces/index.md)
 
 # Type switches
 

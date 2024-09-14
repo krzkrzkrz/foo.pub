@@ -8,7 +8,7 @@ package main
 
 import "fmt"
 
-// In this example, adder() is being called multiple times—the anonymous function is
+// In this example, adder() is being called multiple times
 // The anonymous function is a closure, which keeps the variable myAdder alive
 func adder() func(int) int {
 	sum := 0
