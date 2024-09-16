@@ -42,5 +42,5 @@
 * [Channels: Close](channels-close/index.md)
 * [Channels: Select](channels-select/index.md)
 * [Channels: Default](channels-default/index.md)
+* [sync.Mutex](sinc-mutex/index.md)
 
-TODO continue from here https://go.dev/tour/concurrency/1 (Concurrency)
