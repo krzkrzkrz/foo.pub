@@ -35,9 +35,12 @@
 * [Type assertions](time-assertions/index.md)
 * [Type switches](time-switches/index.md)
 * [Stringers](stringers/index.md)
+* [Errors](errors/index.md)
+* [Generics](generics/index.md)
+* [Goroutines](goroutines/index.md)
+* [Channels](channels/index.md)
+* [Channels: Close](channels-close/index.md)
+* [Channels: Select](channels-select/index.md)
+* [Channels: Default](channels-default/index.md)
 
-
-
-
-
-TODO continue from here https://go.dev/tour/methods/19 (Errors)
+TODO continue from here https://go.dev/tour/concurrency/1 (Concurrency)
