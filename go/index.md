@@ -2,9 +2,11 @@
 
 [Go](https://go.dev) is a statically typed, compiled high-level programming language designed at Google
 
-## Suggested learning approach
+# Suggested learning approach
 
 * [A tour of go](https://go.dev/tour/welcome/1)
+
+# Topics
 
 * [Naming conventions](naming-conventions/index.md)
 * [Installation](installation/index.md)
