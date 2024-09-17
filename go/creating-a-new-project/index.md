@@ -8,15 +8,15 @@
 
 4. Next, create a file called `hello.go` and add the following code:
 
-```go
-package main
+   ```go
+   package main
 
-import "fmt"
+   import "fmt"
 
-func main() {
-    fmt.Println("Hello, World!")
-}
-```
+   func main() {
+       fmt.Println("Hello, World!")
+   }
+    ```
 
 5. Run the program: `go run hello.go`. Should output: `Hello, World!`
 
