@@ -4,7 +4,7 @@
 2. Navigate to directory: `cd hello`
 3. Type `go mod init hello`
 
-You will end up with `go.mod` file in the directory.
+   You will end up with `go.mod` file in the directory.
 
 4. Next, create a file called `hello.go` and add the following code:
 
