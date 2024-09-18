@@ -37,12 +37,12 @@ The swap function returns two strings.
 
 ```go
 func swap(x, y string) (string, string) {
-  return y, x
+    return y, x
 }
 
 func main() {
-  a, b := swap("hello", "world")
-  fmt.Println(a, b)
+    a, b := swap("hello", "world")
+    fmt.Println(a, b)
 }
 ```
 
@@ -55,13 +55,32 @@ Naked return statements should be used only in short functions, as with the exam
 
 ```go
 func split(sum int) (x, y int) {
-  x = sum * 4 / 9
-  y = sum - x
-  return y,x
+    x = sum * 4 / 9
+    y = sum - x
+    return y,x
 }
 
 func main() {
-  fmt.Println(split(17))
+    fmt.Println(split(17))
+}
+```
+
+## Variadic functions
+
+* Allows a function to accept a variable number of arguments of a specific type
+
+```go
+func sum(nums ...int) int {
+    total := 0
+    for _, num := range nums {
+        total += num
+    }
+    return total
+}
+
+func main() {
+    result := sum(1, 2, 3, 4)
+    fmt.Println(result) // Prints: 10
 }
 ```
 
