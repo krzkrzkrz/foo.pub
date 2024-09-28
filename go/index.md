@@ -33,7 +33,7 @@
 * [Function values](function-values/index.md)
 * [Function closures](function-closures/index.md)
 * [Methods](methods/index.md)
-* [Intefaces](interfaces/index.md)
+* [Interfaces](interfaces/index.md)
 * [Type assertions](time-assertions/index.md)
 * [Type switches](time-switches/index.md)
 * [Stringers](stringers/index.md)

@@ -40,4 +40,18 @@ func main() {
 }
 ```
 
+## Multiple assignment
+
+```go
+func main() {
+    var (
+      foo = "foobar"
+      bar = "barfoo"
+    )
+
+    func main() {
+      fmt.Printf("foo: %s, bar: %s", foo, bar) // Prints: foo: foobar, bar: barfoo
+    }
+}
+```
 

@@ -18,3 +18,46 @@ func main() {
 	fmt.Println("After swap:", swapped_val1, swapped_val2) // Prints: After swap: abc 1
 }
 ```
+
+## Another example
+
+* if you wanted to count how many times a particular value appears in a `[]string` slice and an
+  `[]int` slice you would need to write two separate functions — one function for the `[]string`
+  type and another for the `[]int`
+
+```go
+// Count how many times the value v appears in the slice s.
+func countString(v string, s []string) int {
+    count := 0
+    for _, vs := range s {
+        if v == vs {
+            count++
+        }
+    }
+    return count
+}
+
+func countInt(v int, s []int) int {
+    count := 0
+    for _, vs := range s {
+        if v == vs {
+            count++
+        }
+    }
+    return count
+}
+```
+
+With generics, you can write a single function that works with any type:
+
+```go
+func count[T comparable](v T, s []T) int {
+    count := 0
+    for _, vs := range s {
+        if v == vs {
+            count++
+        }
+    }
+    return count
+}
+```

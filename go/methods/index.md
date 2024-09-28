@@ -20,8 +20,12 @@ type Person struct {
 // Method to get the full name of the person
 // (p Person) is the "receiver"
 // fullname() is the method name
-func (p Person) fullName() string {
-	return p.firstName + " " + p.lastName
+func (p Person) fullName(nickName string) string {
+	if nickName == "" {
+		return p.firstName + " " + p.lastName
+	} else {
+		return p.firstName + " " + p.lastName + " " + nickName
+	}
 }
 
 func main() {
@@ -32,9 +36,9 @@ func main() {
 	}
 
 	// Call the method to get the full name
-	fullName := person.fullName()
+	fullName := person.fullName("JD")
 
-	fmt.Println("Full Name:", fullName) // Prints: Full Name: John Doe
+	fmt.Println("Full Name:", fullName) // Prints: Full Name: John Doe JD
 }
 ```
 
