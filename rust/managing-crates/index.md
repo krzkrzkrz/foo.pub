@@ -15,7 +15,7 @@ cargo add crate_name -F feature_name
 ## Removing a crate from the project
 
 ```bash
-cargo uninstall crate_name
+cargo remove crate_name
 ```
 
 

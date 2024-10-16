@@ -31,12 +31,18 @@ IMPORTANT: when you are done reading this book you might think I get it now. But
 nearly deep enough. Its a great intro but after this you will be smack in the middle of the "got the gist phase". You've got some
 more work to do.
 
-## 2. Read [RUST BY EXAMPLE](https://doc.rust-lang.org/rust-by-example)
+## 2. Further reading
+
+Read [RUST BY EXAMPLE](https://doc.rust-lang.org/rust-by-example)
 
 This is a great series of code snippets illustrating most of the language components. All examples are short, can be run directly (and even modified) in the books pages and they
 each illustrate a specific aspect of Rust programming. This will not take long study all of them, make sure you modify and play
 with each one, don't move on until you fully understand each chapter. After going through this, you'll be in a good spot. Then
 it'll be time to bring it all home.
+
+Read [Rust Development Classes](https://rust-classes.com/preface)
+
+This book and the examples in it have been written to support the online Rust development sessions
 
 ## 3. Do the exercises in [Rustings](https://github.com/rust-lang/rustlings)
 

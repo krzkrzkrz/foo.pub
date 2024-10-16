@@ -1,4 +1,4 @@
-# Binding
+# Match binding
 
 * Indirectly accessing a variable makes it impossible to branch and use that variable
   without re-binding. `match` provides the `@` sigil for binding values to names
@@ -23,4 +23,4 @@ fn main() {
         n             => println!("I'm an old person of age {:?}", n),
     }
 }
-```
+`

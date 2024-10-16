@@ -4,8 +4,8 @@
   iterator in different ways
 * `for` loop will apply the `into_iter`
 
-**iter** - This borrows each element of the collection through each iteration. Thus leaving the collection  
-untouched and available for reuse after the loop
+**iter** - This borrows each element of the collection through each iteration. Thus leaving the
+collection untouched and available for reuse after the loop
 
 ```rust
 fn main() {
