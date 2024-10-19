@@ -34,6 +34,8 @@ thread safety.
 * [Enums](enums/index.md)
 * [Impl](impl/index.md)
 * [Traits](traits/index.md)
+* [Traits: Defaults](traits-defaults/index.md)
+* [Traits: Operator overloading](traits-operator-overloading/index.md)
 * [Traits: Super](traits-super/index.md)
 * [Type alias](type-alias/index.md)
 * [Options](options/index.md)

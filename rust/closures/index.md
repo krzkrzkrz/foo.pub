@@ -1,6 +1,7 @@
 # Closures
 
 * Closures are functions that can capture the enclosing environment
+* Also known as anonymous functions
 
 ```rust
 fn main() {
